@@ -272,6 +272,7 @@ function injectLoader() {
 
 // ── CMS DATA ───────────────────────────────────────────────────────────────
 const CMS = {
+  cache: {},
   defaults: {
     categories: [
       {id:1,icon:'👗',name:'Fashion & Apparel',desc:'Pakistani couture to global fast fashion.',floor:'Level 2 & 3'},
@@ -360,9 +361,64 @@ const CMS = {
       splashBtnEnabled: true
     }
   },
-  get(k) { try { return JSON.parse(localStorage.getItem('tb_'+k)) || this.defaults[k]; } catch { return this.defaults[k]; } },
-  set(k, v) { try { localStorage.setItem('tb_'+k, JSON.stringify(v)); } catch(e) { console.error('CMS set failed', e); } }
+  async init() {
+    const keys = Object.keys(this.defaults);
+    for (const k of keys) {
+      try {
+        const response = await fetch(`https://raw.githubusercontent.com/syedwali110/theblue2/main/data/${k}.json`);
+        if (response.ok) {
+          this.cache[k] = await response.json();
+        } else {
+          this.cache[k] = this.defaults[k];
+        }
+      } catch (e) {
+        console.warn(`Failed to load ${k} from GitHub, using defaults`);
+        this.cache[k] = this.defaults[k];
+      }
+      // Also check localStorage as backup
+      try {
+        const local = localStorage.getItem('tb_'+k);
+        if (local) {
+          const localData = JSON.parse(local);
+          // Merge or prefer GitHub, but for now use GitHub if loaded
+          if (!this.cache[k] || this.cache[k] === this.defaults[k]) {
+            this.cache[k] = localData;
+          }
+        }
+      } catch {}
+    }
+  },
+  get(k) {
+    return this.cache[k] || this.defaults[k];
+  },
+  async set(k, v) {
+    this.cache[k] = v;
+    // Save to localStorage
+    try {
+      localStorage.setItem('tb_'+k, JSON.stringify(v));
+    } catch(e) {
+      console.error('CMS localStorage set failed', e);
+    }
+    // Save to GitHub
+    try {
+      const response = await fetch('/.netlify/functions/save-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: k, data: v })
+      });
+      if (!response.ok) {
+        console.error('Failed to save to GitHub:', await response.text());
+      }
+    } catch(e) {
+      console.error('GitHub save failed:', e);
+    }
+  }
 };
+
+// Initialize CMS on load
+window.addEventListener('DOMContentLoaded', async () => {
+  await CMS.init();
+});
 
 // ── SHARED UTILITIES ────────────────────────────────────────────────────────
 function initCursor() {
