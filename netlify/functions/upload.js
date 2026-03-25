@@ -9,6 +9,9 @@ exports.handler = async (event, context) => {
     return { statusCode: 400, body: 'Missing imageData or fileName' };
   }
 
+  // Sanitize filename: replace spaces and special chars
+  const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+
   const token = process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO; // e.g. 'username/repo'
   const branch = 'main'; // or your branch
@@ -22,14 +25,18 @@ exports.handler = async (event, context) => {
   // Remove data URL prefix
   const base64Data = imageData.replace(/^data:image\/[a-z]+;base64,/, '');
 
-  const path = `images/${fileName}`;
+  const path = `images/${sanitizedFileName}`;
 
   try {
+    console.log('Starting upload for', sanitizedFileName);
     // Get latest commit SHA
     const refResponse = await fetch(`https://api.github.com/repos/${repo}/git/refs/heads/${branch}`, {
       headers: { Authorization: `token ${token}` }
     });
-    if (!refResponse.ok) throw new Error('Failed to get ref');
+    if (!refResponse.ok) {
+      console.error('Ref response status:', refResponse.status, await refResponse.text());
+      throw new Error('Failed to get ref');
+    }
     const refData = await refResponse.json();
     const latestCommitSha = refData.object.sha;
 
