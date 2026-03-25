@@ -1432,26 +1432,40 @@ function saveSettingsForm() {
 }
 
 // ---- IMAGE MANAGER ----
-function handleBulkUpload(input) {
+async function handleBulkUpload(input) {
   const files = Array.from(input.files);
   const images = CMS.get('images');
   let processed = 0;
-  files.forEach(file => {
-    if(file.size > 30*1024*1024) { showToast(`${file.name} exceeds 30MB`,'error'); return; }
+  for (const file of files) {
+    if(file.size > 30*1024*1024) { showToast(`${file.name} exceeds 30MB`,'error'); continue; }
     const reader = new FileReader();
-    reader.onload = e => {
-      compressImage(e.target.result, compressed => {
-        images.push({ id:Date.now()+Math.random(), name:file.name, data:compressed, size:file.size, type:file.type });
-        processed++;
-        if(processed===files.length) {
-          CMS.set('images',images); renderImageGrid();
-          showToast(`${files.length} image(s) uploaded!`); refreshDashboard();
-          addActivity(`${files.length} image(s) uploaded`,'blue');
-        }
+    const dataUrl = await new Promise(resolve => {
+      reader.onload = e => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+    const compressed = await new Promise(resolve => compressImage(dataUrl, resolve));
+    try {
+      const response = await fetch('/.netlify/functions/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageData: compressed, fileName: file.name })
       });
-    };
-    reader.readAsDataURL(file);
-  });
+      if (!response.ok) throw new Error('Upload failed');
+      const result = await response.json();
+      images.push({ id: Date.now() + Math.random(), name: file.name, url: result.url, size: file.size, type: file.type });
+    } catch (error) {
+      showToast(`Failed to upload ${file.name}`, 'error');
+      console.error(error);
+    }
+    processed++;
+    if (processed === files.length) {
+      CMS.set('images', images);
+      renderImageGrid();
+      showToast(`${files.length} image(s) uploaded!`);
+      refreshDashboard();
+      addActivity(`${files.length} image(s) uploaded`, 'blue');
+    }
+  }
   input.value = '';
 }
 
@@ -1461,7 +1475,7 @@ function renderImageGrid() {
   if(!images.length) { grid.innerHTML = '<div class="img-empty">No images yet. Upload your first image above.</div>'; return; }
   grid.innerHTML = images.map(img => `
     <div class="img-card">
-      <img src="${img.data}" alt="${img.name}">
+      <img src="${img.url}" alt="${img.name}">
       <div class="img-card-info">
         <span class="img-card-name" title="${img.name}">${img.name}</span>
         <div class="img-card-actions">
@@ -1475,7 +1489,7 @@ function renderImageGrid() {
 
 function copyImageUrl(id) {
   const img = CMS.get('images').find(i=>i.id==id);
-  if(img) { navigator.clipboard?.writeText(img.data); showToast('Image URL copied!'); }
+  if(img) { navigator.clipboard?.writeText(img.url); showToast('Image URL copied!'); }
 }
 
 function deleteImage(id) {
@@ -1485,17 +1499,32 @@ function deleteImage(id) {
 }
 
 // ---- FILE PREVIEW ----
-function previewFile(input, previewId, dataId) {
+async function previewFile(input, previewId, dataId) {
   const file = input.files[0]; if(!file) return;
   if(file.size > 30*1024*1024) { showToast('File exceeds 30MB','error'); return; }
   const reader = new FileReader();
-  reader.onload = e => {
-    compressImage(e.target.result, compressed => {
+  const dataUrl = await new Promise(resolve => {
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+  compressImage(dataUrl, async compressed => {
+    document.getElementById(previewId).innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${compressed}"></div>`;
+    try {
+      const response = await fetch('/.netlify/functions/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageData: compressed, fileName: file.name })
+      });
+      if (!response.ok) throw new Error('Upload failed');
+      const result = await response.json();
+      document.getElementById(dataId).value = result.url;
+    } catch (error) {
+      showToast('Failed to upload image', 'error');
+      console.error(error);
+      // Fallback to data URL
       document.getElementById(dataId).value = compressed;
-      document.getElementById(previewId).innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${compressed}"></div>`;
-    });
-  };
-  reader.readAsDataURL(file);
+    }
+  });
 }
 
 // ---- DROP ZONE ----
