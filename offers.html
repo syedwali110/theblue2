@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Offers & Deals — The Blue Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+.sec{padding:7rem 0;position:relative}
+.sec.dark{background:linear-gradient(180deg,#071018,#081520,#071018)}
+.sec.ptn{background:#071018}
+.sec.ptn::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(201,146,26,.06) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
+.offer-card{background:#071018;border:1px solid rgba(201,146,26,.18);padding:2rem;display:flex;flex-direction:column;gap:1rem;position:relative;overflow:hidden;transition:all .35s;cursor:pointer}
+.offer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#8a6010,#c9921a,#8a6010);transform:scaleX(0);transition:transform .4s}
+.offer-card:hover{transform:translateY(-6px);border-color:rgba(201,146,26,.45);background:rgba(26,58,92,.25)}
+.offer-card:hover::before{transform:scaleX(1)}
+.oc-img{width:100%;height:160px;object-fit:cover;border:1px solid rgba(201,146,26,.15)}
+.oc-badge{font-family:'Cinzel Decorative',serif;font-size:2.2rem;font-weight:700;color:#c9921a;line-height:1}
+.oc-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:#f0ece2}
+.oc-store{font-size:.78rem;color:#8a6010;letter-spacing:.12em;font-family:'Cinzel',serif}
+.oc-desc{font-size:.85rem;color:#7a7a7a;line-height:1.65}
+.oc-valid{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;color:#8a6010;padding:.3rem .65rem;border:1px solid rgba(201,146,26,.18);width:fit-content;margin-top:auto;text-transform:uppercase}
+/* REWARDS */
+.rewards-box{background:linear-gradient(135deg,#071018,#0d2137);border:1px solid rgba(201,146,26,.22);padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.tier-list{display:flex;flex-direction:column;gap:1px;background:rgba(201,146,26,.15);margin-top:1.5rem}
+.tier{background:#071018;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+.tier:hover{background:#0d2137}
+.tier-name{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600}
+.tier-benefit{font-size:.78rem;color:#7a7a7a}
+.tier-pts{font-family:'Cinzel',serif;font-size:.65rem;color:#c9921a;letter-spacing:.18em}
+.tier.silver .tier-name{color:#c0c0c0}
+.tier.gold .tier-name{color:#c9921a}
+.tier.platinum .tier-name{color:#e8d4f8}
+.tier.diamond .tier-name{color:#a8e4f8}
+@media(max-width:900px){.rewards-box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<div id="loader"></div>
+<nav id="nav"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-badge">Exclusive Deals</div>
+  <h1 class="page-hero-title">Offers & Privileges</h1>
+  <p class="page-hero-sub">The best deals, discounts, and exclusive member privileges at The Blue Karachi</p>
+</div>
+<div id="ticker"></div>
+
+<!-- CURRENT OFFERS -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem"><div class="section-lbl">Active Now</div><h2 class="section-h">This Month's <em>Best Deals</em></h2></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem" id="offersGrid"></div>
+  </div>
+</section>
+
+<!-- REWARDS PROGRAMME -->
+<section class="sec ptn">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem;text-align:center"><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Loyalty Programme</div><h2 class="section-h" style="text-align:center">The Blue <em>Rewards Club</em></h2></div>
+    <div class="rewards-box" data-r>
+      <div>
+        <h3 style="font-family:'Cinzel',serif;font-size:1.4rem;color:#f0ece2;margin-bottom:1rem">Earn as You Shop</h3>
+        <p style="font-size:.92rem;color:#7a7a7a;line-height:1.78;margin-bottom:1.5rem">Join The Blue Rewards Club and earn points with every purchase across all participating stores, restaurants, and entertainment venues. Redeem points for exclusive vouchers, free experiences, and member-only privileges.</p>
+        <div style="display:flex;flex-direction:column;gap:.6rem;font-size:.88rem;color:#d4cfc3">
+          <div style="display:flex;gap:.8rem;align-items:center"><span>✦</span> 1 point for every Rs. 100 spent</div>
+          <div style="display:flex;gap:.8rem;align-items:center"><span>✦</span> Double points on your birthday</div>
+          <div style="display:flex;gap:.8rem;align-items:center"><span>✦</span> Exclusive member-only sale previews</div>
+          <div style="display:flex;gap:.8rem;align-items:center"><span>✦</span> Free valet parking for Gold & above</div>
+          <div style="display:flex;gap:.8rem;align-items:center"><span>✦</span> Priority concierge services</div>
+        </div>
+        <a href="contact.html" class="btn-g" style="margin-top:2rem;width:fit-content">Join Free Today</a>
+      </div>
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;color:#c9921a;text-transform:uppercase;margin-bottom:1rem">Membership Tiers</div>
+        <div class="tier-list">
+          <div class="tier silver"><div><div class="tier-name">Silver</div><div class="tier-benefit">Welcome tier · Basic rewards</div></div><div class="tier-pts">0+ pts</div></div>
+          <div class="tier gold"><div><div class="tier-name">Gold</div><div class="tier-benefit">Free valet · 1.5× points</div></div><div class="tier-pts">5,000+ pts</div></div>
+          <div class="tier platinum"><div><div class="tier-name">Platinum</div><div class="tier-benefit">Lounge access · 2× points</div></div><div class="tier-pts">20,000+ pts</div></div>
+          <div class="tier diamond"><div><div class="tier-name">Diamond</div><div class="tier-benefit">Full concierge · 3× points</div></div><div class="tier-pts">50,000+ pts</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GIFT CARDS -->
+<section class="sec dark">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
+      <div data-r="l">
+        <div class="section-lbl">Gift Cards</div>
+        <h2 class="section-h">The Perfect <em>Gift</em></h2>
+        <div class="gold-rule"></div>
+        <p style="font-size:.92rem;color:#d4cfc3;line-height:1.8;opacity:.85">The Blue Gift Cards are accepted at all 200+ stores, restaurants, and entertainment venues across all 7 floors. Available in values from Rs. 500 to Rs. 50,000.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem">
+          <span style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;padding:.5rem 1.1rem;border:1px solid rgba(201,146,26,.22);color:#8a6010">Rs. 500</span>
+          <span style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;padding:.5rem 1.1rem;border:1px solid rgba(201,146,26,.22);color:#8a6010">Rs. 1,000</span>
+          <span style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;padding:.5rem 1.1rem;border:1px solid rgba(201,146,26,.22);color:#8a6010">Rs. 2,500</span>
+          <span style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;padding:.5rem 1.1rem;border:1px solid rgba(201,146,26,.22);color:#8a6010">Rs. 5,000</span>
+          <span style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;padding:.5rem 1.1rem;border:1px solid rgba(201,146,26,.22);color:#8a6010">Rs. 10,000</span>
+          <span style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;padding:.5rem 1.1rem;border:1px solid rgba(201,146,26,.22);color:#8a6010">Custom Value</span>
+        </div>
+        <a href="contact.html" class="btn-g" style="margin-top:2rem;width:fit-content">Purchase Gift Card</a>
+      </div>
+      <div data-r="r" style="background:linear-gradient(135deg,#071018,#0d2137);border:1px solid rgba(201,146,26,.22);padding:3rem;display:flex;flex-direction:column;align-items:center;gap:1.5rem;text-align:center">
+        <div style="width:100%;max-width:280px;background:linear-gradient(135deg,#1a3a5c,#0d1b2a);border:2px solid rgba(201,146,26,.4);padding:2rem;border-radius:2px;position:relative">
+          <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:#8a6010;text-transform:uppercase;margin-bottom:1rem">The Blue Karachi</div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:2.5rem;color:#e8b84b;line-height:1">GIFT</div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:#c9921a;line-height:1.2">CARD</div>
+          <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;color:#8a6010;margin-top:1rem;text-transform:uppercase">Karachi · Pakistan</div>
+        </div>
+        <p style="font-size:.82rem;color:#7a7a7a;max-width:220px;line-height:1.65">Available at the Concierge Desk on Ground Floor or online at thebluekarachi.com</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+<script src="shared.js"></script>
+<script>
+initAll('offers.html');
+const offers = CMS.get('offers');
+document.getElementById('offersGrid').innerHTML = offers.map(o=>`
+  <div class="offer-card" data-r>
+    ${o.image?`<img src="${o.image}" class="oc-img" alt="${o.title}">`:''}
+    <div class="oc-badge">${o.badge}</div>
+    <div class="oc-title">${o.title}</div>
+    <div class="oc-store">${o.store}</div>
+    <div class="oc-desc">${o.desc}</div>
+    <div class="oc-valid">${o.validity}</div>
+  </div>`).join('');
+setTimeout(()=>{ document.querySelectorAll('[data-r]').forEach(el=>{ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.08}).observe(el); }); },100);
+</script>
+</body>
+</html>

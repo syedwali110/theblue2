@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Events — The Blue Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+.sec{padding:7rem 0;position:relative}
+.sec.dark{background:linear-gradient(180deg,#071018,#081520,#071018)}
+.sec.ptn{background:#071018}
+.sec.ptn::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(201,146,26,.06) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
+/* EVENT CARDS */
+.event-card{background:#071018;border:1px solid rgba(201,146,26,.18);display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:2.5rem;padding:2.2rem 2.5rem;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.event-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9921a,transparent);transform:scaleX(0);transition:transform .4s}
+.event-card:hover{background:#0d2137;padding-left:3rem}
+.event-card:hover::before{transform:scaleX(1)}
+.ec-date{text-align:center}
+.ec-day{font-family:'Cinzel Decorative',serif;font-size:2.5rem;font-weight:700;color:#c9921a;line-height:1}
+.ec-mon{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;color:#7a7a7a;text-transform:uppercase}
+.ec-cat{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;color:#c9921a;text-transform:uppercase;margin-bottom:.4rem}
+.ec-title{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:600;color:#f0ece2;margin-bottom:.3rem;line-height:1.3}
+.ec-time{font-size:.82rem;color:#7a7a7a}
+.ec-arrow{color:#8a6010;font-size:1.4rem;transition:all .3s;flex-shrink:0}
+.event-card:hover .ec-arrow{transform:translateX(7px);color:#c9921a}
+.event-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.1;transition:opacity .4s;z-index:0}
+.event-card:hover .event-bg{opacity:.3}
+.event-card > div{position:relative;z-index:1}
+/* PAST EVENTS */
+.past-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,146,26,.18)}
+.past-card{background:#071018;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:.8rem;opacity:.7;transition:opacity .3s;cursor:pointer}
+.past-card:hover{opacity:1;background:#0d2137}
+.pc-cat{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.35em;color:#8a6010;text-transform:uppercase}
+.pc-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:#f0ece2}
+.pc-date{font-size:.78rem;color:#7a7a7a}
+/* HOST */
+.host-box{background:linear-gradient(135deg,#071018,#0d2137);border:1px solid rgba(201,146,26,.22);padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hf-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem}
+.hf-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;color:#8a6010;text-transform:uppercase}
+.hf-input,.hf-select,.hf-textarea{background:rgba(7,16,24,.85);border:1px solid rgba(201,146,26,.22);color:#f0ece2;padding:.65rem .9rem;font-family:'Raleway',sans-serif;font-size:.85rem;outline:none;transition:border-color .3s}
+.hf-input:focus,.hf-select:focus,.hf-textarea:focus{border-color:#c9921a}
+.hf-textarea{min-height:80px;resize:vertical}
+.hf-input::placeholder,.hf-textarea::placeholder{color:#7a7a7a}
+@media(max-width:900px){.event-card{grid-template-columns:80px 1fr auto;gap:1.5rem;padding:1.5rem}.past-grid{grid-template-columns:1fr}.host-box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<div id="loader"></div>
+<nav id="nav"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-badge">What's On</div>
+  <h1 class="page-hero-title">Events & Happenings</h1>
+  <p class="page-hero-sub">Fashion weeks, food festivals, cultural celebrations, and live performances</p>
+</div>
+<div id="ticker"></div>
+
+<!-- UPCOMING EVENTS -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem"><div class="section-lbl">Upcoming</div><h2 class="section-h">Don't Miss <em>These Events</em></h2></div>
+    <div style="display:flex;flex-direction:column;gap:1px;background:rgba(201,146,26,.12)" id="upcomingList"></div>
+  </div>
+</section>
+
+<!-- PAST EVENTS -->
+<section class="sec ptn">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem"><div class="section-lbl">Past Events</div><h2 class="section-h">Memorable <em>Moments</em></h2></div>
+    <div class="past-grid">
+      <div class="past-card" data-r><div class="pc-cat">Fashion</div><div class="pc-title">Bridal Couture Week 2025</div><div class="pc-date">October 2025 · Grand Atrium</div></div>
+      <div class="past-card" data-r><div class="pc-cat">Food Festival</div><div class="pc-title">International Food Carnival 2025</div><div class="pc-date">August 2025 · Level 5 & Food Court</div></div>
+      <div class="past-card" data-r><div class="pc-cat">National Day</div><div class="pc-title">Independence Day Celebration 2025</div><div class="pc-date">August 14, 2025 · Entire Mall</div></div>
+      <div class="past-card" data-r><div class="pc-cat">Entertainment</div><div class="pc-title">Eid Mega Festival 2025</div><div class="pc-date">June 2025 · All Floors</div></div>
+      <div class="past-card" data-r><div class="pc-cat">Luxury</div><div class="pc-title">Jewellery & Watch Exhibition 2025</div><div class="pc-date">April 2025 · Level 1</div></div>
+      <div class="past-card" data-r><div class="pc-cat">Lifestyle</div><div class="pc-title">Grand Opening Weekend</div><div class="pc-date">January 2024 · Entire Mall</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOST AN EVENT -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem;text-align:center"><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Host With Us</div><h2 class="section-h" style="text-align:center">Plan Your Event<br><em>at The Blue</em></h2></div>
+    <div class="host-box" data-r>
+      <div>
+        <h3 style="font-family:'Cinzel',serif;font-size:1.4rem;color:#f0ece2;margin-bottom:1rem">Our Event Spaces</h3>
+        <p style="font-size:.9rem;color:#7a7a7a;line-height:1.75;margin-bottom:1.5rem">The Blue offers several world-class event spaces for corporate events, brand launches, fashion shows, exhibitions, and private celebrations.</p>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(201,146,26,.15)">
+          <div style="background:#071018;padding:1rem 1.2rem"><div style="font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2">Grand Atrium</div><div style="font-size:.78rem;color:#7a7a7a;margin-top:.2rem">Ground to Level 3 · Up to 2,000 guests</div></div>
+          <div style="background:#071018;padding:1rem 1.2rem"><div style="font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2">Rooftop Terrace</div><div style="font-size:.78rem;color:#7a7a7a;margin-top:.2rem">Level 7 · Up to 400 guests · Panoramic views</div></div>
+          <div style="background:#071018;padding:1rem 1.2rem"><div style="font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2">Event Halls A & B</div><div style="font-size:.78rem;color:#7a7a7a;margin-top:.2rem">Level 6 · 200–800 guests · Fully equipped</div></div>
+          <div style="background:#071018;padding:1rem 1.2rem"><div style="font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2">The Blue Boardroom</div><div style="font-size:.78rem;color:#7a7a7a;margin-top:.2rem">Level 5 · Up to 50 guests · Corporate meetings</div></div>
+        </div>
+      </div>
+      <form onsubmit="event.preventDefault();this.querySelector('.btn-g').textContent='✓ Enquiry Sent!';this.querySelector('.btn-g').style.background='#40a860'">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.8rem">
+          <div class="hf-group"><label class="hf-label">Name</label><input class="hf-input" placeholder="Full name" required></div>
+          <div class="hf-group"><label class="hf-label">Company</label><input class="hf-input" placeholder="Organisation"></div>
+        </div>
+        <div class="hf-group"><label class="hf-label">Email</label><input class="hf-input" type="email" placeholder="your@email.com" required></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="hf-group"><label class="hf-label">Event Type</label><select class="hf-select"><option>Corporate Event</option><option>Brand Launch</option><option>Fashion Show</option><option>Wedding / Celebration</option><option>Exhibition</option></select></div>
+          <div class="hf-group"><label class="hf-label">Expected Guests</label><select class="hf-select"><option>Under 100</option><option>100 – 300</option><option>300 – 800</option><option>800 – 2000</option><option>2000+</option></select></div>
+        </div>
+        <div class="hf-group" style="margin-top:.8rem"><label class="hf-label">Message</label><textarea class="hf-textarea" placeholder="Tell us about your event..."></textarea></div>
+        <button type="submit" class="btn-g" style="cursor:pointer;margin-top:.8rem;width:100%;justify-content:center">Send Enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+<script src="shared.js"></script>
+<script>
+initAll('events.html');
+const events = CMS.get('events');
+document.getElementById('upcomingList').innerHTML = events.map(e=>{
+  const bgImage = (e.images && e.images.length > 0) ? e.images[0] : (e.image || '');
+  return `
+  <div class="event-card" data-r>
+    ${bgImage ? `<div class="event-bg" style="background-image:url('${bgImage}')"></div>` : ''}
+    <div class="ec-date"><div class="ec-day">${e.day}</div><div class="ec-mon">${e.month} ${e.year}</div></div>
+    <div><div class="ec-cat">${e.cat || e.category}</div><div class="ec-title">${e.title}</div><div class="ec-time">${e.time}</div></div>
+    <div class="ec-arrow">→</div>
+  </div>`;
+}).join('');
+setTimeout(()=>{ document.querySelectorAll('[data-r]').forEach(el=>{ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.08}).observe(el); }); },100);
+</script>
+</body>
+</html>

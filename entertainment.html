@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Entertainment — The Blue Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+.sec{padding:7rem 0;position:relative}
+.sec.dark{background:linear-gradient(180deg,#071018,#081520,#071018)}
+.sec.ptn{background:#071018}
+.sec.ptn::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(201,146,26,.06) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
+.ent-hero-card{position:relative;overflow:hidden;cursor:pointer;transition:all .4s;display:flex;align-items:flex-end;min-height:360px}
+.ent-hero-card:hover .eh-bg{transform:scale(1.05)}
+.eh-bg{position:absolute;inset:0;transition:transform .5s}
+.eh-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,16,24,.95) 0%,rgba(7,16,24,.1) 55%)}
+.eh-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(201,146,26,.025) 0,rgba(201,146,26,.025) 1px,transparent 1px,transparent 22px)}
+.eh-content{position:relative;z-index:2;padding:2.5rem}
+.eh-tag{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;color:#c9921a;text-transform:uppercase;margin-bottom:.5rem}
+.eh-name{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:#f0ece2;line-height:1.2;margin-bottom:.5rem}
+.eh-desc{font-size:.86rem;color:#d4cfc3;line-height:1.6;max-width:350px;margin-bottom:1.2rem}
+.eh-floor{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;color:#8a6010;text-transform:uppercase}
+.ent-main-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,146,26,.18);margin-bottom:1px}
+.ent-sm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,146,26,.18)}
+/* CINEMA */
+.cinema-info{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.screen-list{display:flex;flex-direction:column;gap:1px;background:rgba(201,146,26,.18);margin-top:1.5rem}
+.sc-row{background:#071018;padding:1.1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+.sc-row:hover{background:#0d2137}
+.sc-name{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2}
+.sc-feat{font-size:.75rem;color:#8a6010;letter-spacing:.12em}
+.sc-seats{font-family:'Cinzel',serif;font-size:.65rem;color:#c9921a;letter-spacing:.18em}
+/* KIDS */
+.kids-features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,146,26,.18);margin-top:2rem}
+.kf{background:#071018;padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;gap:.7rem;transition:background .3s}
+.kf:hover{background:#0d2137}
+.kf-ico{font-size:2rem}
+.kf-name{font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;color:#f0ece2}
+.kf-desc{font-size:.82rem;color:#7a7a7a;line-height:1.6}
+@media(max-width:900px){.ent-main-grid{grid-template-columns:1fr}.cinema-info{grid-template-columns:1fr}.ent-sm-grid{grid-template-columns:1fr 1fr}.kids-features{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<div id="loader"></div>
+<nav id="nav"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-badge">Entertainment</div>
+  <h1 class="page-hero-title">Beyond Shopping</h1>
+  <p class="page-hero-sub">An immersive world of cinema, gaming, live events, and family fun</p>
+</div>
+<div id="ticker"></div>
+
+<!-- HERO ENTERTAINMENT CARDS -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem"><div class="section-lbl">Experiences</div><h2 class="section-h">What's <em>Waiting for You</em></h2></div>
+    <div class="ent-main-grid">
+      <div class="ent-hero-card"><div class="eh-bg" style="background:linear-gradient(135deg,#0a0f1a,#1a2a4a)"></div><div class="eh-pattern"></div><div class="eh-overlay"></div><div class="eh-content"><div class="eh-tag">Cinema · Level 5 & 6</div><div class="eh-name">Cineplex Premium</div><div class="eh-desc">6-screen IMAX and luxury recliner cinema with the latest blockbusters and independent films.</div><a href="#cinema" class="btn-g">Explore Cinema</a></div></div>
+      <div class="ent-hero-card"><div class="eh-bg" style="background:linear-gradient(135deg,#1a0a2a,#2a1040)"></div><div class="eh-pattern"></div><div class="eh-overlay"></div><div class="eh-content"><div class="eh-tag">Gaming · Level 4</div><div class="eh-name">Game Zone X</div><div class="eh-desc">Karachi's largest VR arena, laser tag, 120+ arcade machines, and competitive gaming lounge.</div><a href="#gaming" class="btn-g">Explore Gaming</a></div></div>
+    </div>
+    <div class="ent-sm-grid">
+      <div class="ent-hero-card" style="min-height:220px"><div class="eh-bg" style="background:linear-gradient(135deg,#0a1a1a,#1a3a2a)"></div><div class="eh-overlay"></div><div class="eh-content" style="padding:1.5rem"><div class="eh-tag">Kids · Level 4</div><div class="eh-name" style="font-size:1.2rem">Blue Kids World</div><div class="eh-floor">Adventure Park & Rides</div></div></div>
+      <div class="ent-hero-card" style="min-height:220px"><div class="eh-bg" style="background:linear-gradient(135deg,#1a1a0a,#3a2a10)"></div><div class="eh-overlay"></div><div class="eh-content" style="padding:1.5rem"><div class="eh-tag">Events · Ground–Level 3</div><div class="eh-name" style="font-size:1.2rem">Grand Atrium</div><div class="eh-floor">Live Shows & Fashion Events</div></div></div>
+      <div class="ent-hero-card" style="min-height:220px"><div class="eh-bg" style="background:linear-gradient(135deg,#1a0a1a,#2a1030)"></div><div class="eh-overlay"></div><div class="eh-content" style="padding:1.5rem"><div class="eh-tag">Bowling · Level 4</div><div class="eh-name" style="font-size:1.2rem">Strike Lanes</div><div class="eh-floor">12-Lane Premium Bowling</div></div></div>
+      <div class="ent-hero-card" style="min-height:220px"><div class="eh-bg" style="background:linear-gradient(135deg,#0a1a0a,#0d2a1a)"></div><div class="eh-overlay"></div><div class="eh-content" style="padding:1.5rem"><div class="eh-tag">Wellness · Level 6</div><div class="eh-name" style="font-size:1.2rem">Serenity Spa</div><div class="eh-floor">Luxury Spa & Hammam</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CINEMA -->
+<section class="sec ptn" id="cinema">
+  <div class="container">
+    <div class="cinema-info">
+      <div data-r="l">
+        <div class="section-lbl">Now Showing</div>
+        <h2 class="section-h">Cineplex <em>Premium</em></h2>
+        <div class="gold-rule"></div>
+        <p style="font-size:.95rem;color:#d4cfc3;line-height:1.82;opacity:.85">Karachi's most advanced cinema complex features 6 screens including a full IMAX theatre and 4 luxury recliner halls. Every screen is equipped with Dolby Atmos surround sound and 4K laser projection.</p>
+        <div class="screen-list">
+          <div class="sc-row"><div><div class="sc-name">Screen 1 — IMAX</div><div class="sc-feat">4K Laser · Dolby Atmos · 270° Sound</div></div><div class="sc-seats">380 Seats</div></div>
+          <div class="sc-row"><div><div class="sc-name">Screen 2 — VIP Recliners</div><div class="sc-feat">Luxury Recliners · In-seat Service</div></div><div class="sc-seats">60 Seats</div></div>
+          <div class="sc-row"><div><div class="sc-name">Screen 3 — Premium Plus</div><div class="sc-feat">4K Laser · Dolby Atmos</div></div><div class="sc-seats">220 Seats</div></div>
+          <div class="sc-row"><div><div class="sc-name">Screens 4–6 — Standard Premium</div><div class="sc-feat">4K Digital · Surround Sound</div></div><div class="sc-seats">180 Seats Each</div></div>
+        </div>
+      </div>
+      <div data-r="r" style="background:linear-gradient(135deg,#071018,#0d2137);border:1px solid rgba(201,146,26,.22);padding:3rem;display:flex;flex-direction:column;gap:1.5rem">
+        <div style="text-align:center;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.4em;color:#c9921a;text-transform:uppercase">Ticket Prices</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(201,146,26,.15)">
+          <div style="background:#071018;padding:1rem 1.2rem;display:flex;justify-content:space-between"><span style="font-size:.88rem;color:#d4cfc3">IMAX Premium</span><span style="font-family:'Cinzel',serif;color:#c9921a;font-size:.9rem">Rs. 1,400</span></div>
+          <div style="background:#071018;padding:1rem 1.2rem;display:flex;justify-content:space-between"><span style="font-size:.88rem;color:#d4cfc3">VIP Recliner</span><span style="font-family:'Cinzel',serif;color:#c9921a;font-size:.9rem">Rs. 1,800</span></div>
+          <div style="background:#071018;padding:1rem 1.2rem;display:flex;justify-content:space-between"><span style="font-size:.88rem;color:#d4cfc3">Premium Plus</span><span style="font-family:'Cinzel',serif;color:#c9921a;font-size:.9rem">Rs. 900</span></div>
+          <div style="background:#071018;padding:1rem 1.2rem;display:flex;justify-content:space-between"><span style="font-size:.88rem;color:#d4cfc3">Standard Premium</span><span style="font-family:'Cinzel',serif;color:#c9921a;font-size:.9rem">Rs. 600</span></div>
+        </div>
+        <div style="font-size:.75rem;color:#7a7a7a;text-align:center">Tuesday Special: 50% off all screens · Student discount available</div>
+        <a href="#" class="btn-g" style="text-align:center;justify-content:center">Book Tickets Online</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KIDS WORLD -->
+<section class="sec dark" id="kids">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem;text-align:center"><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Family Fun</div><h2 class="section-h" style="text-align:center">Blue <em>Kids World</em></h2><p style="font-size:.9rem;color:#7a7a7a;margin-top:.8rem">Level 4 · Ages 2–14 · Open daily 10 AM – 10 PM</p></div>
+    <div class="kids-features">
+      <div class="kf" data-r><div class="kf-ico">🎠</div><div class="kf-name">Adventure Rides</div><div class="kf-desc">8 themed indoor rides including a mini roller coaster, carousel, and drop tower designed for children.</div></div>
+      <div class="kf" data-r><div class="kf-ico">🧗</div><div class="kf-name">Climbing & Obstacle Zone</div><div class="kf-desc">Multi-level climbing walls, rope courses, and balance beams for ages 4–12 with certified safety equipment.</div></div>
+      <div class="kf" data-r><div class="kf-ico">🎭</div><div class="kf-name">Roleplay City</div><div class="kf-desc">A mini city where children can roleplay as doctors, chefs, firefighters, and more in themed environments.</div></div>
+      <div class="kf" data-r><div class="kf-ico">🎨</div><div class="kf-name">Creative Arts Studio</div><div class="kf-desc">Pottery, painting, craft workshops, and STEM activities led by professional child educators.</div></div>
+      <div class="kf" data-r><div class="kf-ico">🎮</div><div class="kf-name">Kids Arcade</div><div class="kf-desc">Age-appropriate arcade games with token redemption and prize counter for endless entertainment.</div></div>
+      <div class="kf" data-r><div class="kf-ico">🍦</div><div class="kf-name">Little Bites Café</div><div class="kf-desc">A dedicated kids menu café with healthy meals, juices, and sweet treats for young visitors.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+<script src="shared.js"></script>
+<script>initAll('entertainment.html'); setTimeout(()=>{ document.querySelectorAll('[data-r]').forEach(el=>{ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.08}).observe(el); }); },100);</script>
+</body>
+</html>

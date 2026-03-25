@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact & Visit — The Blue Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+.sec{padding:7rem 0;position:relative}
+.sec.dark{background:linear-gradient(180deg,#071018,#081520,#071018)}
+.sec.ptn{background:#071018}
+.sec.ptn::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(201,146,26,.06) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
+/* CONTACT LAYOUT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:2rem}
+.ci-item{display:flex;gap:1.2rem;align-items:flex-start;padding:1.5rem;border:1px solid rgba(201,146,26,.18);background:rgba(13,27,42,.5);transition:all .3s}
+.ci-item:hover{border-color:rgba(201,146,26,.4);background:rgba(26,58,92,.2)}
+.ci-ico{font-size:1.6rem;flex-shrink:0}
+.ci-body strong{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#c9921a;display:block;margin-bottom:.4rem}
+.ci-body p{font-size:.9rem;color:#d4cfc3;line-height:1.72}
+/* HOURS TABLE */
+.hours-table{background:rgba(201,146,26,.08);border:1px solid rgba(201,146,26,.18);margin-top:.5rem}
+.ht-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.1rem;border-bottom:1px solid rgba(201,146,26,.07);font-size:.87rem}
+.ht-row:last-child{border-bottom:none}
+.ht-day{color:#d4cfc3}
+.ht-time{color:#c9921a;font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.1em}
+/* CONTACT FORM */
+.cf-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.9rem}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.9rem}
+.cf-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:#8a6010}
+.cf-input,.cf-select,.cf-textarea{background:rgba(7,16,24,.85);border:1px solid rgba(201,146,26,.22);color:#f0ece2;padding:.68rem .92rem;font-family:'Raleway',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;width:100%}
+.cf-input:focus,.cf-select:focus,.cf-textarea:focus{border-color:#c9921a}
+.cf-input::placeholder,.cf-textarea::placeholder{color:#7a7a7a}
+.cf-textarea{min-height:110px;resize:vertical}
+.cf-select option{background:#0d1b2a}
+/* MAP BIG */
+.big-map{border:1px solid rgba(201,146,26,.22);background:linear-gradient(135deg,#071018,#0d2137);height:400px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.bm-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,146,26,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,146,26,.04) 1px,transparent 1px);background-size:50px 50px}
+.bm-center{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.bm-pin{font-size:3.5rem;animation:pb 2s ease infinite;filter:drop-shadow(0 0 12px rgba(201,146,26,.5))}
+.bm-name{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.25em;color:#c9921a}
+.bm-addr{font-size:.85rem;color:#7a7a7a}
+.bm-ripple{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.bmr{position:absolute;border:1px solid rgba(201,146,26,.12);border-radius:50%;transform:translate(-50%,-50%);animation:rpl 3s ease infinite}
+.bmr1{width:130px;height:130px}.bmr2{width:220px;height:220px;animation-delay:1s}.bmr3{width:320px;height:320px;animation-delay:2s}.bmr4{width:450px;height:450px;animation-delay:3s}
+@keyframes pb{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes rpl{0%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}}
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:1px;background:rgba(201,146,26,.15)}
+.faq-item{background:#071018;overflow:hidden;transition:background .3s}
+.faq-item.open{background:#0d2137}
+.faq-q{padding:1.3rem 1.8rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;color:#f0ece2;transition:color .3s;gap:1rem}
+.faq-q:hover{color:#c9921a}
+.faq-arrow{color:#8a6010;transition:transform .35s;font-size:1.1rem;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(90deg);color:#c9921a}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 1.8rem;font-size:.88rem;color:#7a7a7a;line-height:1.75}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:1.3rem}
+/* DEPARTMENTS */
+.dept-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,146,26,.18)}
+.dept{background:#071018;padding:1.8rem 1.4rem;display:flex;flex-direction:column;gap:.7rem;transition:background .3s}
+.dept:hover{background:#0d2137}
+.dept-ico{font-size:1.6rem}
+.dept-name{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2}
+.dept-email{font-size:.78rem;color:#8a6010;letter-spacing:.08em}
+.dept-ph{font-size:.82rem;color:#7a7a7a}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}.dept-grid{grid-template-columns:1fr 1fr}.cf-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<div id="loader"></div>
+<nav id="nav"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-badge">Find Us</div>
+  <h1 class="page-hero-title">Contact & Visit</h1>
+  <p class="page-hero-sub">We'd love to hear from you — our team is here to help</p>
+</div>
+<div id="ticker"></div>
+
+<!-- MAP -->
+<section class="sec dark">
+  <div class="container">
+    <div class="big-map" data-r>
+      <div class="bm-grid"></div>
+      <div class="bm-ripple"><div class="bmr bmr1"></div><div class="bmr bmr2"></div><div class="bmr bmr3"></div><div class="bmr bmr4"></div></div>
+      <div class="bm-center">
+        <div class="bm-pin">📍</div>
+        <div class="bm-name">The Blue Karachi</div>
+        <div class="bm-addr">Clifton, Karachi, Sindh, Pakistan</div>
+        <a href="https://maps.google.com/?q=Clifton+Karachi" target="_blank" class="btn-g" style="margin-top:.5rem">Get Directions in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT INFO + FORM -->
+<section class="sec ptn">
+  <div class="container">
+    <div class="contact-grid">
+      <div data-r="l">
+        <div class="section-lbl">Reach Us</div>
+        <h2 class="section-h">Get in <em>Touch</em></h2>
+        <div class="gold-rule"></div>
+        <div class="contact-info">
+          <div class="ci-item"><div class="ci-ico">📍</div><div class="ci-body"><strong>Address</strong><p>The Blue Karachi<br>Clifton, Karachi<br>Sindh, Pakistan</p></div></div>
+          <div class="ci-item"><div class="ci-ico">📞</div><div class="ci-body"><strong>Phone</strong><p>Main Line: +92 21 0000 0000<br>Concierge: +92 21 0000 0001<br>Events: +92 21 0000 0002</p></div></div>
+          <div class="ci-item"><div class="ci-ico">📧</div><div class="ci-body"><strong>Email</strong><p>General: info@thebluekarachi.com<br>Events: events@thebluekarachi.com<br>Leasing: leasing@thebluekarachi.com</p></div></div>
+          <div class="ci-item"><div class="ci-ico">🕐</div><div class="ci-body"><strong>Opening Hours</strong>
+            <div class="hours-table">
+              <div class="ht-row"><span class="ht-day">Monday – Thursday</span><span class="ht-time">10 AM – 11 PM</span></div>
+              <div class="ht-row"><span class="ht-day">Friday</span><span class="ht-time">2 PM – 12 AM</span></div>
+              <div class="ht-row"><span class="ht-day">Saturday – Sunday</span><span class="ht-time">10 AM – 12 AM</span></div>
+              <div class="ht-row"><span class="ht-day">Public Holidays</span><span class="ht-time">10 AM – 12 AM</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+      <div data-r="r" style="background:linear-gradient(135deg,#071018,#0d2137);border:1px solid rgba(201,146,26,.22);padding:3rem">
+        <h3 style="font-family:'Cinzel',serif;font-size:1.2rem;color:#f0ece2;margin-bottom:.4rem">Send Us a Message</h3>
+        <p style="font-size:.85rem;color:#7a7a7a;margin-bottom:2rem">We'll respond within 24 hours on business days.</p>
+        <form onsubmit="event.preventDefault();const b=this.querySelector('button');b.textContent='✓ Message Sent!';b.style.background='#40a860';b.style.color='#fff'">
+          <div class="cf-row">
+            <div class="cf-group"><label class="cf-label">Full Name *</label><input class="cf-input" placeholder="Your name" required></div>
+            <div class="cf-group"><label class="cf-label">Phone *</label><input class="cf-input" placeholder="+92 3XX XXXXXXX" required></div>
+          </div>
+          <div class="cf-group"><label class="cf-label">Email *</label><input class="cf-input" type="email" placeholder="your@email.com" required></div>
+          <div class="cf-group"><label class="cf-label">Subject</label>
+            <select class="cf-select">
+              <option>General Enquiry</option>
+              <option>Store Information</option>
+              <option>Event Hosting</option>
+              <option>Leasing & Business</option>
+              <option>Lost & Found</option>
+              <option>Complaint / Feedback</option>
+              <option>Rewards Programme</option>
+              <option>Gift Cards</option>
+            </select>
+          </div>
+          <div class="cf-group"><label class="cf-label">Message *</label><textarea class="cf-textarea" placeholder="How can we help you?" required></textarea></div>
+          <button type="submit" class="btn-g" style="cursor:pointer;width:100%;justify-content:center;margin-top:.5rem">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem;text-align:center"><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Our Teams</div><h2 class="section-h" style="text-align:center">Contact the Right <em>Department</em></h2></div>
+    <div class="dept-grid">
+      <div class="dept" data-r><div class="dept-ico">🛎️</div><div class="dept-name">Concierge</div><div class="dept-email">concierge@thebluekarachi.com</div><div class="dept-ph">+92 21 0000 0001</div></div>
+      <div class="dept" data-r><div class="dept-ico">📅</div><div class="dept-name">Events & MICE</div><div class="dept-email">events@thebluekarachi.com</div><div class="dept-ph">+92 21 0000 0002</div></div>
+      <div class="dept" data-r><div class="dept-ico">🏢</div><div class="dept-name">Leasing</div><div class="dept-email">leasing@thebluekarachi.com</div><div class="dept-ph">+92 21 0000 0003</div></div>
+      <div class="dept" data-r><div class="dept-ico">📰</div><div class="dept-name">Media & PR</div><div class="dept-email">pr@thebluekarachi.com</div><div class="dept-ph">+92 21 0000 0004</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec ptn">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem;text-align:center"><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Common Questions</div><h2 class="section-h" style="text-align:center">Frequently Asked <em>Questions</em></h2></div>
+    <div class="faq-list" style="max-width:900px;margin:0 auto">
+      <div class="faq-item">
+        <div class="faq-q">Where is The Blue Karachi located? <span class="faq-arrow">→</span></div>
+        <div class="faq-a">The Blue Karachi is located in Clifton, Karachi — one of the city's most prestigious and accessible neighbourhoods, close to major roads and public transport routes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What are the parking facilities? <span class="faq-arrow">→</span></div>
+        <div class="faq-a">We have over 3,000 parking spaces across 2 basement levels and a dedicated multi-storey car park. Valet parking is available at all entrances for Gold members and above.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there a prayer area available? <span class="faq-arrow">→</span></div>
+        <div class="faq-a">Yes, dedicated prayer halls with ablution facilities are located on Level 2 and Level 5. They are open throughout mall hours and are climate controlled.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I join the Rewards Club? <span class="faq-arrow">→</span></div>
+        <div class="faq-a">Sign up for free at the Concierge Desk on the Ground Floor, at any participating store, or online at thebluekarachi.com. You start earning points from your very first purchase.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is the mall accessible for people with disabilities? <span class="faq-arrow">→</span></div>
+        <div class="faq-a">Absolutely. The Blue is fully accessible with dedicated parking, wide corridors, accessible restrooms on every floor, lifts, and trained staff to assist visitors with special needs.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I host a private event at The Blue? <span class="faq-arrow">→</span></div>
+        <div class="faq-a">Yes! We have several event spaces from intimate boardrooms to the spectacular Grand Atrium accommodating up to 2,000 guests. Contact our events team at events@thebluekarachi.com.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+<script src="shared.js"></script>
+<script>
+initAll('contact.html');
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.closest('.faq-item');
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+setTimeout(()=>{ document.querySelectorAll('[data-r]').forEach(el=>{ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.08}).observe(el); }); },100);
+</script>
+</body>
+</html>

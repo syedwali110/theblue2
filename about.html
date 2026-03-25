@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About Us — The Blue Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+.sec{padding:8rem 0;position:relative}
+.sec.dark{background:linear-gradient(180deg,#071018 0%,#081520 50%,#071018 100%)}
+.sec.ptn{background:#071018}
+.sec.ptn::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(201,146,26,.06) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.story-body{font-size:.98rem;color:#d4cfc3;line-height:1.9;opacity:.85;margin-top:1rem}
+.story-body+.story-body{margin-top:.8rem}
+.vision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,146,26,.2)}
+.v-card{background:#071018;padding:2.5rem 2rem;display:flex;flex-direction:column;gap:1rem;transition:background .3s}
+.v-card:hover{background:#0d2137}
+.v-card-ico{font-size:2.2rem}
+.v-card-title{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:#f0ece2}
+.v-card-txt{font-size:.88rem;color:#7a7a7a;line-height:1.7}
+.milestones{display:flex;flex-direction:column;gap:0;background:rgba(201,146,26,.15)}
+.ms-row{background:#071018;display:grid;grid-template-columns:120px 1fr;align-items:center;gap:2.5rem;padding:2rem 2.5rem;border-bottom:1px solid rgba(201,146,26,.07);transition:all .3s}
+.ms-row:hover{background:#0d2137;padding-left:3rem}
+.ms-year{font-family:'Cinzel Decorative',serif;font-size:1.8rem;font-weight:700;color:#c9921a;line-height:1}
+.ms-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:#f0ece2;margin-bottom:.3rem}
+.ms-desc{font-size:.85rem;color:#7a7a7a;line-height:1.6}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,146,26,.18)}
+.tm{background:#071018;padding:2rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center;transition:background .3s}
+.tm:hover{background:#0d2137}
+.tm-avatar{width:80px;height:80px;border:2px solid rgba(201,146,26,.35);border-radius:50%;background:linear-gradient(135deg,#1a3a5c,#0d2137);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.tm-name{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:#f0ece2;letter-spacing:.1em}
+.tm-role{font-size:.75rem;color:#8a6010;letter-spacing:.15em;text-transform:uppercase}
+.awards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,146,26,.18)}
+.aw{background:#071018;padding:1.8rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.7rem;text-align:center;transition:background .3s}
+.aw:hover{background:#0d2137}
+.aw-ico{font-size:2rem}
+.aw-title{font-family:'Cinzel',serif;font-size:.82rem;font-weight:600;color:#f0ece2}
+.aw-year{font-size:.7rem;color:#8a6010;letter-spacing:.15em}
+@media(max-width:900px){.story-grid{grid-template-columns:1fr;gap:3rem}.vision-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr 1fr}.awards-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<div id="loader"></div>
+<nav id="nav"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-badge">Our Story</div>
+  <h1 class="page-hero-title">About The Blue</h1>
+  <p class="page-hero-sub">Karachi's most iconic lifestyle destination — a story of vision, luxury, and community</p>
+</div>
+
+<div id="ticker"></div>
+
+<!-- OUR STORY -->
+<section class="sec dark">
+  <div class="container">
+    <div class="story-grid">
+      <div data-r="l">
+        <div class="section-lbl">Who We Are</div>
+        <h2 class="section-h">A Vision Born<br><em>for Karachi</em></h2>
+        <div class="gold-rule"></div>
+        <p class="story-body">The Blue Karachi was conceived as more than a shopping destination — it is a celebration of Karachi's vibrant spirit, its cosmopolitan character, and its people's unyielding aspiration for the finest things in life.</p>
+        <p class="story-body">Spanning seven magnificent floors and housing over 200 premium brands, 50+ restaurants, world-class entertainment, and unparalleled services, The Blue stands as the most ambitious retail and lifestyle development in Pakistan's history.</p>
+        <p class="story-body">Every detail — from the soaring Grand Atrium adorned with the iconic Blue Celtic motif to the handcrafted terrazzo floors — was designed to inspire awe, comfort, and a genuine sense of belonging.</p>
+      </div>
+      <div data-r="r" style="display:flex;flex-direction:column;gap:1.2rem">
+        <div style="border:1px solid rgba(201,146,26,.22);background:linear-gradient(135deg,#071018,#0d2137);padding:3.5rem;display:flex;align-items:center;justify-content:center;position:relative">
+          <svg viewBox="0 0 280 280" style="width:200px;height:200px;filter:drop-shadow(0 0 18px rgba(201,146,26,.25))" xmlns="http://www.w3.org/2000/svg">
+            <defs><radialGradient id="rg2"><stop offset="0%" stop-color="#1a3a5c"/><stop offset="100%" stop-color="#0d1b2a"/></radialGradient></defs>
+            <circle cx="140" cy="140" r="138" fill="url(#rg2)"/>
+            <circle cx="140" cy="140" r="125" fill="none" stroke="#c9921a" stroke-width="1.5" opacity=".5"/>
+            <circle cx="140" cy="140" r="85" fill="none" stroke="rgba(201,146,26,.18)" stroke-width="1"/>
+            <text x="140" y="130" text-anchor="middle" font-family="Cinzel,serif" font-size="22" fill="#c9921a" letter-spacing="3" font-weight="600">THE</text>
+            <text x="140" y="162" text-anchor="middle" font-family="Cinzel,serif" font-size="28" fill="#e8b84b" letter-spacing="2" font-weight="700">BLUE</text>
+            <text x="140" y="186" text-anchor="middle" font-family="Cinzel,serif" font-size="9.5" fill="rgba(201,146,26,.65)" letter-spacing="7">KARACHI</text>
+          </svg>
+          <div style="position:absolute;top:-12px;right:-12px;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:#8a6010;padding:.38rem .8rem;border:1px solid rgba(201,146,26,.18);background:#071018">Est. 2024</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,146,26,.18)">
+          <div style="background:#071018;padding:1.3rem;text-align:center"><span style="font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:#c9921a;display:block">200+</span><span style="font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:#7a7a7a">Stores</span></div>
+          <div style="background:#071018;padding:1.3rem;text-align:center"><span style="font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:#c9921a;display:block">50+</span><span style="font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:#7a7a7a">Restaurants</span></div>
+          <div style="background:#071018;padding:1.3rem;text-align:center"><span style="font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:#c9921a;display:block">7</span><span style="font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:#7a7a7a">Floors</span></div>
+          <div style="background:#071018;padding:1.3rem;text-align:center"><span style="font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:#c9921a;display:block">3000+</span><span style="font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:#7a7a7a">Parking</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION / MISSION -->
+<section class="sec ptn">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem" data-r>
+      <div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Our Purpose</div>
+      <h2 class="section-h" style="text-align:center">Vision, Mission<br><em>& Values</em></h2>
+    </div>
+    <div class="vision-grid">
+      <div class="v-card" data-r><div class="v-card-ico">🔭</div><div class="v-card-title">Our Vision</div><div class="v-card-txt">To be Pakistan's most loved and internationally recognised shopping and lifestyle destination — a place that brings joy, discovery, and luxury to every visitor.</div></div>
+      <div class="v-card" data-r><div class="v-card-ico">🎯</div><div class="v-card-title">Our Mission</div><div class="v-card-txt">To curate and deliver an extraordinary experience through the perfect blend of world-class retail, dining, entertainment, and personalised service.</div></div>
+      <div class="v-card" data-r><div class="v-card-ico">💫</div><div class="v-card-title">Our Values</div><div class="v-card-txt">Excellence in every detail. Warmth in every interaction. Innovation in every experience. Community in every connection. These are the pillars of The Blue.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:2.5rem"><div class="section-lbl">Our Journey</div><h2 class="section-h">Key <em>Milestones</em></h2></div>
+    <div class="milestones">
+      <div class="ms-row" data-r><div><div class="ms-year">2020</div></div><div><div class="ms-title">Groundbreaking Ceremony</div><div class="ms-desc">The Blue Karachi officially broke ground at its prime Clifton location, marking the beginning of an extraordinary vision.</div></div></div>
+      <div class="ms-row" data-r><div><div class="ms-year">2022</div></div><div><div class="ms-title">Structure Completion</div><div class="ms-desc">The iconic 7-floor structure reached its full height, with the Grand Atrium's glass dome becoming a new landmark on Karachi's skyline.</div></div></div>
+      <div class="ms-row" data-r><div><div class="ms-year">2023</div></div><div><div class="ms-title">Anchor Brands Confirmed</div><div class="ms-desc">Over 150 international and local brands signed leases, including Khaadi, Sapphire, Zara, Samsung, and Cineplex Premium.</div></div></div>
+      <div class="ms-row" data-r><div><div class="ms-year">2024</div></div><div><div class="ms-title">Grand Opening</div><div class="ms-desc">The Blue Karachi opened its doors to the public — welcoming over 80,000 visitors in its opening weekend alone.</div></div></div>
+      <div class="ms-row" data-r><div><div class="ms-year">2025</div></div><div><div class="ms-title">Award for Best Mall in Pakistan</div><div class="ms-desc">The Blue was honoured with the Pakistan Retail Excellence Award for Best Shopping Mall Experience of the Year.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="sec ptn">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem" data-r><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Leadership</div><h2 class="section-h" style="text-align:center">The Team <em>Behind The Blue</em></h2></div>
+    <div class="team-grid">
+      <div class="tm" data-r><div class="tm-avatar">👨‍💼</div><div class="tm-name">Ahmed Raza</div><div class="tm-role">Chief Executive Officer</div></div>
+      <div class="tm" data-r><div class="tm-avatar">👩‍💼</div><div class="tm-name">Sara Malik</div><div class="tm-role">Director of Retail</div></div>
+      <div class="tm" data-r><div class="tm-avatar">👨‍💼</div><div class="tm-name">Faisal Khan</div><div class="tm-role">Head of Operations</div></div>
+      <div class="tm" data-r><div class="tm-avatar">👩‍💼</div><div class="tm-name">Nadia Iqbal</div><div class="tm-role">Marketing Director</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="sec dark">
+  <div class="container">
+    <div data-r style="margin-bottom:3rem;text-align:center"><div class="section-lbl" style="justify-content:center;margin-bottom:.8rem"><span></span>Recognition</div><h2 class="section-h" style="text-align:center">Awards & <em>Achievements</em></h2></div>
+    <div class="awards-row">
+      <div class="aw" data-r><div class="aw-ico">🏆</div><div class="aw-title">Best Mall in Pakistan</div><div class="aw-year">Pakistan Retail Awards · 2025</div></div>
+      <div class="aw" data-r><div class="aw-ico">⭐</div><div class="aw-title">5-Star Customer Service</div><div class="aw-year">Mystery Shopper Report · 2024</div></div>
+      <div class="aw" data-r><div class="aw-ico">🌿</div><div class="aw-title">Green Building Certified</div><div class="aw-year">LEED Gold Certification · 2024</div></div>
+      <div class="aw" data-r><div class="aw-ico">🎨</div><div class="aw-title">Best Architecture Design</div><div class="aw-year">Pakistan Architecture Awards · 2024</div></div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+<script src="shared.js"></script>
+<script>initAll('about.html');</script>
+</body>
+</html>

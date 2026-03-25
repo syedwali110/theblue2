@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blue Karachi — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2a; --navy-mid: #1a3a5c; --navy-deep: #071018;
+  --gold: #c9921a; --gold-light: #e8b84b; --gold-dim: #8a6010;
+  --gold-faint: rgba(201,146,26,0.1);
+  --white: #f0ece2; --grey: #8a8a8a; --border: rgba(201,146,26,0.2);
+  --danger: #c94040; --success: #40a860;
+  --panel: rgba(13,27,42,0.95);
+  --sidebar-w: 260px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:15px; }
+body { background:var(--navy-deep); color:var(--white); font-family:'Raleway',sans-serif; font-weight:300; overflow-x:hidden; display:flex; min-height:100vh; }
+a { text-decoration:none; color:inherit; }
+input, textarea, select, button { font-family:'Raleway',sans-serif; }
+
+/* SIDEBAR */
+.sidebar {
+  width:var(--sidebar-w); min-height:100vh;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  position:fixed; top:0; left:0;
+  z-index:100; overflow-y:auto;
+}
+.sb-logo {
+  padding:1.8rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:0.75rem;
+}
+.sb-logo-circle {
+  width:38px; height:38px;
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cinzel',serif; font-size:0.7rem; color:var(--gold);
+}
+.sb-logo-text { display:flex; flex-direction:column; }
+.sb-logo-main { font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.2em; color:var(--white); font-weight:600; }
+.sb-logo-sub { font-size:0.6rem; letter-spacing:0.3em; color:var(--gold-dim); text-transform:uppercase; }
+.sb-nav { flex:1; padding:1.5rem 0; }
+.sb-section-title {
+  font-family:'Cinzel',serif; font-size:0.55rem;
+  letter-spacing:0.45em; text-transform:uppercase;
+  color:var(--gold-dim); padding:0.5rem 1.5rem 0.3rem;
+}
+.sb-link {
+  display:flex; align-items:center; gap:0.75rem;
+  padding:0.75rem 1.5rem;
+  font-size:0.82rem; font-weight:400;
+  color:rgba(240,236,226,0.6);
+  cursor:pointer;
+  transition:all 0.25s;
+  border-left:2px solid transparent;
+}
+.sb-link:hover { background:var(--gold-faint); color:var(--white); border-left-color:var(--gold-dim); }
+.sb-link.active { background:rgba(201,146,26,0.12); color:var(--gold-light); border-left-color:var(--gold); font-weight:500; }
+.sb-link .sb-icon { font-size:1rem; width:20px; text-align:center; }
+.sb-footer {
+  padding:1.5rem;
+  border-top:1px solid var(--border);
+  display:flex; flex-direction:column; gap:0.5rem;
+}
+.sb-footer a { font-size:0.78rem; color:var(--grey); transition:color 0.2s; }
+.sb-footer a:hover { color:var(--gold); }
+
+/* MAIN CONTENT */
+.main {
+  margin-left:var(--sidebar-w);
+  flex:1;
+  display:flex; flex-direction:column;
+  min-height:100vh;
+}
+.topbar {
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:50;
+}
+.topbar-title { font-family:'Cinzel',serif; font-size:1.1rem; font-weight:600; color:var(--white); }
+.topbar-right { display:flex; gap:1rem; align-items:center; }
+.topbar-badge {
+  font-family:'Cinzel',serif; font-size:0.6rem;
+  letter-spacing:0.25em; text-transform:uppercase;
+  padding:0.3rem 0.8rem;
+  border:1px solid var(--border);
+  color:var(--gold-dim);
+}
+.topbar-user {
+  width:36px; height:36px;
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cinzel',serif; font-size:0.75rem;
+  color:var(--gold); cursor:pointer;
+}
+.content { padding:2.5rem 2rem; flex:1; }
+
+/* PANELS */
+.panel { display:none; }
+.panel.active { display:block; }
+
+/* DASHBOARD */
+.dash-stats {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:var(--border); margin-bottom:2.5rem;
+}
+.ds-item {
+  background:var(--panel);
+  padding:1.6rem;
+  display:flex; flex-direction:column; gap:0.4rem;
+  transition:background 0.3s;
+}
+.ds-item:hover { background:rgba(26,58,92,0.3); }
+.ds-icon { font-size:1.5rem; }
+.ds-value { font-family:'Cinzel',serif; font-size:2rem; color:var(--gold); font-weight:700; line-height:1; }
+.ds-label { font-size:0.72rem; letter-spacing:0.15em; color:var(--grey); text-transform:uppercase; }
+.ds-change { font-size:0.72rem; color:var(--success); }
+
+.recent-title {
+  font-family:'Cinzel',serif; font-size:0.85rem;
+  letter-spacing:0.25em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:1rem;
+  border-bottom:1px solid var(--border); padding-bottom:0.75rem;
+}
+.activity-list { display:flex; flex-direction:column; gap:0; background:var(--border); }
+.activity-item {
+  background:var(--panel); padding:0.9rem 1.2rem;
+  display:flex; align-items:center; gap:1.2rem;
+  font-size:0.82rem; color:rgba(240,236,226,0.75);
+}
+.ai-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.ai-dot.gold { background:var(--gold); }
+.ai-dot.green { background:var(--success); }
+.ai-dot.blue { background:#4080c0; }
+.ai-time { margin-left:auto; font-size:0.7rem; color:var(--grey); white-space:nowrap; }
+
+/* SECTION HEADERS */
+.sec-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:1.5rem;
+}
+.sec-header h2 { font-family:'Cinzel',serif; font-size:1.1rem; color:var(--white); }
+.btn-add {
+  display:flex; align-items:center; gap:0.5rem;
+  font-family:'Cinzel',serif; font-size:0.68rem;
+  letter-spacing:0.15em; text-transform:uppercase;
+  padding:0.55rem 1.2rem;
+  background:var(--gold); color:var(--navy-deep);
+  border:none; cursor:pointer;
+  transition:all 0.3s; font-weight:700;
+}
+.btn-add:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+/* TABLE */
+.data-table { width:100%; border-collapse:collapse; background:var(--border); }
+.data-table th {
+  background:rgba(7,16,24,0.9); padding:0.85rem 1rem;
+  text-align:left; font-family:'Cinzel',serif;
+  font-size:0.62rem; letter-spacing:0.3em; color:var(--gold-dim);
+  font-weight:500; text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.data-table td {
+  background:var(--panel); padding:0.85rem 1rem;
+  font-size:0.82rem; color:rgba(240,236,226,0.8);
+  border-bottom:1px solid rgba(201,146,26,0.07);
+}
+.data-table tr:hover td { background:rgba(26,58,92,0.25); }
+.td-actions { display:flex; gap:0.5rem; }
+.btn-edit, .btn-del {
+  font-size:0.65rem; letter-spacing:0.1em;
+  padding:0.3rem 0.65rem;
+  border:none; cursor:pointer; font-family:'Cinzel',serif;
+  transition:all 0.25s;
+}
+.btn-edit { background:var(--gold-faint); color:var(--gold); border:1px solid var(--border); }
+.btn-edit:hover { background:var(--gold); color:var(--navy-deep); }
+.btn-del { background:rgba(201,64,64,0.1); color:var(--danger); border:1px solid rgba(201,64,64,0.2); }
+.btn-del:hover { background:var(--danger); color:#fff; }
+.badge-active { display:inline-block; padding:0.2rem 0.6rem; background:rgba(64,168,96,0.15); color:var(--success); font-size:0.65rem; border:1px solid rgba(64,168,96,0.3); }
+.badge-inactive { display:inline-block; padding:0.2rem 0.6rem; background:rgba(201,64,64,0.1); color:var(--danger); font-size:0.65rem; border:1px solid rgba(201,64,64,0.2); }
+
+/* MODAL */
+.modal-overlay {
+  position:fixed; inset:0;
+  background:rgba(7,16,24,0.92);
+  backdrop-filter:blur(8px);
+  z-index:1000;
+  display:flex; align-items:center; justify-content:center;
+  padding:1rem;
+  opacity:0; visibility:hidden;
+  transition:all 0.3s;
+}
+.modal-overlay.open { opacity:1; visibility:visible; }
+.modal {
+  background:var(--navy);
+  border:1px solid var(--border);
+  width:100%; max-width:640px;
+  max-height:90vh; overflow-y:auto;
+  transform:translateY(20px) scale(0.97);
+  transition:transform 0.3s;
+}
+.modal-overlay.open .modal { transform:translateY(0) scale(1); }
+.modal-header {
+  padding:1.5rem 2rem;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.modal-title { font-family:'Cinzel',serif; font-size:1rem; color:var(--white); font-weight:600; }
+.modal-close {
+  width:32px; height:32px;
+  background:none; border:1px solid var(--border);
+  color:var(--grey); cursor:pointer; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.modal-close:hover { border-color:var(--gold); color:var(--gold); }
+.modal-body { padding:2rem; display:flex; flex-direction:column; gap:1.2rem; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+.form-label {
+  font-family:'Cinzel',serif; font-size:0.62rem;
+  letter-spacing:0.3em; color:var(--gold-dim);
+  text-transform:uppercase;
+}
+.form-input, .form-textarea, .form-select {
+  background:rgba(7,16,24,0.8);
+  border:1px solid var(--border);
+  color:var(--white);
+  padding:0.65rem 0.9rem;
+  font-size:0.85rem;
+  outline:none;
+  transition:border-color 0.3s;
+  font-family:'Raleway',sans-serif;
+  font-weight:300;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color:var(--gold); }
+.form-textarea { min-height:90px; resize:vertical; }
+.form-select { cursor:pointer; }
+.form-select option { background:var(--navy); }
+
+/* IMAGE UPLOAD */
+.upload-area {
+  border:2px dashed var(--border);
+  padding:2.5rem 2rem;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.3s;
+  position:relative;
+}
+.upload-area:hover, .upload-area.dragover { border-color:var(--gold); background:var(--gold-faint); }
+.upload-area input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.upload-icon { font-size:2.5rem; margin-bottom:0.75rem; }
+.upload-text { font-size:0.85rem; color:var(--grey); }
+.upload-text strong { color:var(--gold); display:block; margin-bottom:0.3rem; font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.2em; }
+.upload-preview {
+  display:flex; flex-wrap:wrap; gap:0.75rem;
+  margin-top:0.75rem;
+}
+.preview-img {
+  width:80px; height:80px; object-fit:cover;
+  border:1px solid var(--border);
+  position:relative;
+}
+.preview-img-wrap { position:relative; }
+.preview-remove {
+  position:absolute; top:-6px; right:-6px;
+  width:18px; height:18px;
+  background:var(--danger); color:#fff;
+  border:none; cursor:pointer; font-size:0.65rem;
+  display:flex; align-items:center; justify-content:center; border-radius:50%;
+}
+.modal-footer {
+  padding:1.2rem 2rem;
+  border-top:1px solid var(--border);
+  display:flex; gap:1rem; justify-content:flex-end;
+}
+.btn-cancel {
+  font-family:'Cinzel',serif; font-size:0.68rem;
+  letter-spacing:0.15em; padding:0.6rem 1.4rem;
+  background:none; border:1px solid var(--border);
+  color:var(--grey); cursor:pointer; transition:all 0.3s;
+}
+.btn-cancel:hover { border-color:var(--gold-dim); color:var(--white); }
+.btn-save {
+  font-family:'Cinzel',serif; font-size:0.68rem;
+  letter-spacing:0.15em; padding:0.6rem 1.8rem;
+  background:var(--gold); color:var(--navy-deep);
+  border:none; cursor:pointer; transition:all 0.3s; font-weight:700;
+}
+.btn-save:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:2rem; right:2rem;
+  background:var(--success); color:#fff;
+  padding:0.85rem 1.5rem;
+  font-family:'Cinzel',serif; font-size:0.75rem;
+  letter-spacing:0.15em;
+  z-index:5000;
+  transform:translateY(80px); opacity:0;
+  transition:all 0.35s ease;
+  border-radius:1px;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast.error { background:var(--danger); }
+
+/* IMAGE MANAGER */
+.image-manager-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;
+  margin-top:1rem;
+}
+.img-card {
+  border:1px solid var(--border);
+  background:var(--panel);
+  overflow:hidden;
+  transition:all 0.3s;
+}
+.img-card:hover { border-color:var(--gold-dim); }
+.img-card img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.img-card-info {
+  padding:0.75rem;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.img-card-name { font-size:0.72rem; color:var(--grey); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:120px; }
+.img-card-actions { display:flex; gap:0.35rem; }
+.btn-copy, .btn-del-sm {
+  font-size:0.6rem; padding:0.25rem 0.5rem;
+  border:1px solid var(--border); background:none;
+  cursor:pointer; color:var(--grey); transition:all 0.2s;
+}
+.btn-copy:hover { border-color:var(--gold); color:var(--gold); }
+.btn-del-sm:hover { border-color:var(--danger); color:var(--danger); }
+.img-empty { grid-column:1/-1; text-align:center; padding:4rem; color:var(--grey); font-size:0.9rem; }
+
+/* SETTINGS */
+.settings-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.settings-card {
+  background:var(--panel); border:1px solid var(--border);
+  padding:1.5rem;
+}
+.settings-card h3 { font-family:'Cinzel',serif; font-size:0.82rem; letter-spacing:0.25em; color:var(--gold); margin-bottom:1.2rem; text-transform:uppercase; }
+.toggle-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0.65rem 0; border-bottom:1px solid rgba(201,146,26,0.07);
+  font-size:0.85rem; color:rgba(240,236,226,0.75);
+}
+.toggle {
+  position:relative; width:44px; height:24px;
+  display:inline-block; cursor:pointer;
+}
+.toggle input { opacity:0; width:0; height:0; }
+.toggle-slider {
+  position:absolute; inset:0;
+  background:rgba(255,255,255,0.1);
+  border:1px solid var(--border);
+  transition:0.3s;
+  border-radius:12px;
+}
+.toggle-slider::before {
+  content:''; position:absolute;
+  width:16px; height:16px; left:3px; bottom:3px;
+  background:var(--grey); transition:0.3s; border-radius:50%;
+}
+.toggle input:checked + .toggle-slider { background:var(--gold-faint); border-color:var(--gold); }
+.toggle input:checked + .toggle-slider::before { transform:translateX(20px); background:var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-circle">TB</div>
+    <div class="sb-logo-text">
+      <span class="sb-logo-main">THE BLUE</span>
+      <span class="sb-logo-sub">Admin Panel</span>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section-title">Main</div>
+    <div class="sb-link active" data-panel="dashboard"><span class="sb-icon">📊</span> Dashboard</div>
+    <div class="sb-section-title">Content</div>
+    <div class="sb-link" data-panel="facilities"><span class="sb-icon">📸</span> Gallery Facilities</div>
+    <div class="sb-link" data-panel="offers"><span class="sb-icon">🏷️</span> Offers & Deals</div>
+    <div class="sb-link" data-panel="events"><span class="sb-icon">📅</span> Events</div>
+    <div class="sb-link" data-panel="categories"><span class="sb-icon">🏬</span> Categories</div>
+    <div class="sb-link" data-panel="brands"><span class="sb-icon">⭐</span> Brands</div>
+    <div class="sb-link" data-panel="levels"><span class="sb-icon">🏢</span> Floor Levels</div>
+    <div class="sb-link" data-panel="latestbrands"><span class="sb-icon">🆕</span> Latest Brands</div>
+    <div class="sb-link" data-panel="reviews"><span class="sb-icon">💬</span> Customer Reviews</div>
+    <div class="sb-section-title">Media</div>
+    <div class="sb-link" data-panel="images"><span class="sb-icon">🖼️</span> Image Manager</div>
+    <div class="sb-section-title">System</div>
+    <div class="sb-link" data-panel="settings"><span class="sb-icon">⚙️</span> Settings</div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../index.html" target="_blank">← View Live Website</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-right">
+      <div class="topbar-badge">The Blue Karachi</div>
+      <div class="topbar-user">A</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="dash-stats">
+        <div class="ds-item"><div class="ds-icon">🏷️</div><div class="ds-value" id="statOffers">0</div><div class="ds-label">Active Offers</div></div>
+        <div class="ds-item"><div class="ds-icon">📅</div><div class="ds-value" id="statEvents">0</div><div class="ds-label">Upcoming Events</div></div>
+        <div class="ds-item"><div class="ds-icon">🏬</div><div class="ds-value" id="statCats">0</div><div class="ds-label">Categories</div></div>
+        <div class="ds-item"><div class="ds-icon">🖼️</div><div class="ds-value" id="statImages">0</div><div class="ds-label">Uploaded Images</div></div>
+        <div class="ds-item"><div class="ds-icon">💾</div><div class="ds-value" id="statStorage">0MB</div><div class="ds-label" id="statPercent">0% Used</div></div>
+      </div>
+      <div class="recent-title">Recent Activity</div>
+      <div class="activity-list" id="activityList">
+        <div class="activity-item"><div class="ai-dot green"></div>System initialised — Welcome to The Blue Admin<div class="ai-time">Just now</div></div>
+      </div>
+    </div>
+
+    <!-- FACILITIES -->
+    <div class="panel" id="panel-facilities">
+      <div class="sec-header">
+        <h2>Gallery Facilities</h2>
+        <button class="btn-add" onclick="openModal('facility')">+ Add Facility</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Facility Name</th><th>Tagline</th><th>Image</th><th>Actions</th></tr></thead>
+        <tbody id="facilitiesTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- OFFERS -->
+    <div class="panel" id="panel-offers">
+      <div class="sec-header">
+        <h2>Offers & Deals</h2>
+        <button class="btn-add" onclick="openModal('offer')">+ Add Offer</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Badge</th><th>Title</th><th>Store</th><th>Validity</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="offersTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="panel" id="panel-events">
+      <div class="sec-header">
+        <h2>Events</h2>
+        <button class="btn-add" onclick="openModal('event')">+ Add Event</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Time & Venue</th><th>Actions</th></tr></thead>
+        <tbody id="eventsTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="panel" id="panel-categories">
+      <div class="sec-header">
+        <h2>Shop Categories</h2>
+        <button class="btn-add" onclick="openModal('category')">+ Add Category</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Icon</th><th>Name</th><th>Description</th><th>Floor</th><th>Actions</th></tr></thead>
+        <tbody id="catsTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- BRANDS -->
+    <div class="panel" id="panel-brands">
+      <div class="sec-header">
+        <h2>Featured Brands</h2>
+        <button class="btn-add" onclick="openModal('brand')">+ Add Brand</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Brand Name</th><th>Floor</th><th>Image</th><th>Actions</th></tr></thead>
+        <tbody id="brandsTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- LEVELS -->
+    <div class="panel" id="panel-levels">
+      <div class="sec-header">
+        <h2>Floor Levels</h2>
+        <button class="btn-add" onclick="openModal('level')">+ Add Level</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Floor Name</th><th>Shops</th><th>Image</th><th>Actions</th></tr></thead>
+        <tbody id="levelsTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- LATEST BRANDS -->
+    <div class="panel" id="panel-latestbrands">
+      <div class="sec-header">
+        <h2>Latest Brands</h2>
+        <button class="btn-add" onclick="openModal('latestbrand')">+ Add Latest Brand</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Brand Name</th><th>Image</th><th>Actions</th></tr></thead>
+        <tbody id="latestbrandsTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="panel" id="panel-reviews">
+      <div class="sec-header">
+        <h2>Customer Reviews</h2>
+        <button class="btn-add" onclick="openModal('review')">+ Add Review</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Reviewer Name</th><th>Review Text</th><th>Actions</th></tr></thead>
+        <tbody id="reviewsTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- IMAGE MANAGER -->
+    <div class="panel" id="panel-images">
+      <div class="sec-header">
+        <h2>Image Manager</h2>
+        <button class="btn-add" onclick="document.getElementById('bulkUpload').click()">+ Upload Images</button>
+      </div>
+      <input type="file" id="bulkUpload" accept="image/*" multiple style="display:none" onchange="handleBulkUpload(this)">
+      <div class="upload-area" id="dropZone">
+        <input type="file" accept="image/*" multiple onchange="handleBulkUpload(this)">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">
+          <strong>Drop Images Here or Click to Upload</strong>
+          Supports JPG, PNG, WebP, GIF — Max 5MB each
+        </div>
+      </div>
+      <div class="image-manager-grid" id="imageGrid">
+        <div class="img-empty">No images uploaded yet. Upload your first image above.</div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="sec-header"><h2>Settings</h2></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>Site Logo & Splash Banner</h3>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="form-group">
+              <label class="form-label">Site Logo (PNG/JPEG)</label>
+              <div class="upload-area" style="padding:1rem">
+                <input type="file" accept="image/png, image/jpeg" id="siteLogoFile" onchange="previewFile(this,'settingsLogoPreview','settingsLogoData')">
+                <div class="upload-text"><strong>Click to Upload Logo</strong></div>
+              </div>
+              <div id="settingsLogoPreview" class="upload-preview"></div>
+              <input type="hidden" id="settingsLogoData">
+            </div>
+            
+            <div class="form-group" style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:1rem">
+              <div class="toggle-row" style="border:none;padding:0;margin-bottom:0.5rem">Enable Splash Screen <label class="toggle"><input type="checkbox" id="splashEnabled"><span class="toggle-slider"></span></label></div>
+              <label class="form-label">Splash Banner Image</label>
+              <div class="upload-area" style="padding:1rem">
+                <input type="file" accept="image/*" id="splashImageFile" onchange="previewFile(this,'splashImagePreview','splashImageData')">
+                <div class="upload-text"><strong>Click to Upload Banner</strong></div>
+              </div>
+              <div id="splashImagePreview" class="upload-preview"></div>
+              <input type="hidden" id="splashImageData">
+              
+              <label class="form-label" style="margin-top:0.5rem">Splash Text</label>
+              <input class="form-input" id="splashText" placeholder="e.g. Coming Soon">
+              
+              <label class="form-label" style="margin-top:0.5rem">Text Position</label>
+              <select class="form-select" id="splashPos">
+                <option value="center">Center</option>
+                <option value="top-left">Top Left</option>
+                <option value="bottom-right">Bottom Right</option>
+              </select>
+              
+              <div class="toggle-row" style="border:none;padding:0;margin-top:0.5rem">Show "Visit Website" Button <label class="toggle"><input type="checkbox" id="splashBtnEnabled" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <button class="btn-save" onclick="saveSettingsForm()">Save Logo & Splash</button>
+          </div>
+        </div>
+        <div class="settings-card">
+          <h3>Mall Information</h3>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="form-group"><label class="form-label">Mall Name</label><input class="form-input" value="The Blue Karachi"></div>
+            <div class="form-group"><label class="form-label">Tagline</label><input class="form-input" value="Karachi's Premier Destination"></div>
+            <div class="form-group"><label class="form-label">Address</label><input class="form-input" value="Clifton, Karachi, Sindh"></div>
+            <div class="form-group"><label class="form-label">Phone</label><input class="form-input" value="+92 21 0000 0000"></div>
+            <div class="form-group"><label class="form-label">Email</label><input class="form-input" value="info@thebluekarachi.com"></div>
+            <button class="btn-save" onclick="showToast('Settings saved!')">Save Changes</button>
+          </div>
+        </div>
+        <div class="settings-card">
+          <h3>Opening Hours</h3>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="form-group"><label class="form-label">Mon – Thu</label><input class="form-input" value="10:00 AM – 11:00 PM"></div>
+            <div class="form-group"><label class="form-label">Friday</label><input class="form-input" value="2:00 PM – 12:00 AM"></div>
+            <div class="form-group"><label class="form-label">Sat – Sun</label><input class="form-input" value="10:00 AM – 12:00 AM"></div>
+            <button class="btn-save" onclick="showToast('Hours updated!')">Save Hours</button>
+          </div>
+        </div>
+        <div class="settings-card">
+          <h3>Website Features</h3>
+          <div class="toggle-row">Newsletter Signup <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row">Maintenance Mode <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row">Show Offers Section <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row">Show Events Section <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row">Show Brands Section <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+        </div>
+        <div class="settings-card">
+          <h3>Data Management</h3>
+          <div style="display:flex;flex-direction:column;gap:1rem;margin-top:0.5rem">
+            <button class="btn-save" onclick="exportData()">Export All Data (JSON)</button>
+            <button class="btn-cancel" style="padding:0.6rem 1.4rem;cursor:pointer" onclick="resetToDefaults()">Reset to Default Data</button>
+            <p style="font-size:0.75rem;color:var(--grey);line-height:1.6">All content is stored locally. Export regularly to backup your data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- MODALS -->
+<!-- Facility Modal -->
+<div class="modal-overlay" id="modal-facility">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="facilityModalTitle">Add New Facility</div>
+      <button class="modal-close" onclick="closeModal('facility')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="facilityEditId">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Facility Name *</label><input class="form-input" id="facilityName" placeholder="e.g. FUN CITY"></div>
+        <div class="form-group"><label class="form-label">Tagline (Short) *</label><input class="form-input" id="facilityTag" placeholder="e.g. Games & Attractions"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Full Description (Detail Modal) *</label><textarea class="form-textarea" id="facilityDesc" placeholder="Long content about this facility..."></textarea></div>
+      <div class="form-group">
+        <label class="form-label">Gallery Image *</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" id="facilityImageFile" onchange="previewFile(this,'facilityImagePreview','facilityImageData')">
+          <div class="upload-icon" style="font-size:1.5rem;margin-bottom:0.4rem">🖼️</div>
+          <div class="upload-text"><strong>Click to Upload Background</strong>Vertical/Portrait is best (9:16)</div>
+        </div>
+        <div id="facilityImagePreview" class="upload-preview"></div>
+        <input type="hidden" id="facilityImageData">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('facility')">Cancel</button>
+      <button class="btn-save" onclick="saveFacility()">Save Facility</button>
+    </div>
+  </div>
+</div>
+
+<!-- Offer Modal -->
+<div class="modal-overlay" id="modal-offer">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="offerModalTitle">Add New Offer</div>
+      <button class="modal-close" onclick="closeModal('offer')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="offerEditId">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Discount Badge *</label><input class="form-input" id="offerBadge" placeholder="e.g. 30% OFF"></div>
+        <div class="form-group"><label class="form-label">Store Name *</label><input class="form-input" id="offerStore" placeholder="e.g. Khaadi"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Offer Title *</label><input class="form-input" id="offerTitle" placeholder="e.g. End of Season Sale"></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="offerDesc" placeholder="Brief description of the offer..."></textarea></div>
+      <div class="form-group"><label class="form-label">Validity *</label><input class="form-input" id="offerValidity" placeholder="e.g. Valid until 31 March 2026"></div>
+      <div class="form-group">
+        <label class="form-label">Offer Image (Optional)</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" id="offerImageFile" onchange="previewFile(this,'offerImagePreview','offerImageData')">
+          <div class="upload-icon" style="font-size:1.5rem;margin-bottom:0.4rem">🖼️</div>
+          <div class="upload-text"><strong>Click to Upload Image</strong>Recommended: 600×400px</div>
+        </div>
+        <div id="offerImagePreview" class="upload-preview"></div>
+        <input type="hidden" id="offerImageData">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('offer')">Cancel</button>
+      <button class="btn-save" onclick="saveOffer()">Save Offer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Event Modal -->
+<div class="modal-overlay" id="modal-event">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="eventModalTitle">Add New Event</div>
+      <button class="modal-close" onclick="closeModal('event')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="eventEditId">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Day *</label><input class="form-input" id="eventDay" placeholder="e.g. 22" maxlength="2"></div>
+        <div class="form-group"><label class="form-label">Month *</label>
+          <select class="form-select" id="eventMonth">
+            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option><option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Year *</label><input class="form-input" id="eventYear" value="2026" maxlength="4"></div>
+        <div class="form-group"><label class="form-label">Category *</label><input class="form-input" id="eventCategory" placeholder="e.g. Fashion, Food Festival"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Event Title *</label><input class="form-input" id="eventTitle" placeholder="e.g. Spring Fashion Week"></div>
+      <div class="form-group"><label class="form-label">Time & Venue *</label><input class="form-input" id="eventTime" placeholder="e.g. 3:00 PM – 9:00 PM · Grand Atrium"></div>
+      <div class="form-group">
+        <label class="form-label">Event Images</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" multiple id="eventImageFile" onchange="handleMultipleEventImages(this)">
+          <div class="upload-icon" style="font-size:1.5rem;margin-bottom:0.4rem">🖼️</div>
+          <div class="upload-text"><strong>Click to Upload Images</strong>You can select multiple images</div>
+        </div>
+        <div id="eventImagePreview" class="upload-preview" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('event')">Cancel</button>
+      <button class="btn-save" onclick="saveEvent()">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- Category Modal -->
+<div class="modal-overlay" id="modal-category">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add / Edit Category</div>
+      <button class="modal-close" onclick="closeModal('category')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="catEditId">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Icon (Emoji) *</label><input class="form-input" id="catIcon" placeholder="e.g. 👗" maxlength="4"></div>
+        <div class="form-group"><label class="form-label">Category Name *</label><input class="form-input" id="catName" placeholder="e.g. Fashion & Apparel"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Description *</label><textarea class="form-textarea" id="catDesc" placeholder="Brief category description..."></textarea></div>
+      <div class="form-group"><label class="form-label">Floor *</label><input class="form-input" id="catFloor" placeholder="e.g. Level 2 & 3"></div>
+      <div class="form-group">
+        <label class="form-label">Category Image (Optional)</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" id="catImageFile" onchange="previewFile(this,'catImagePreview','catImageData')">
+          <div class="upload-text"><strong>Click to Upload Image</strong></div>
+        </div>
+        <div id="catImagePreview" class="upload-preview"></div>
+        <input type="hidden" id="catImageData">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('category')">Cancel</button>
+      <button class="btn-save" onclick="saveCategory()">Save Category</button>
+    </div>
+  </div>
+</div>
+
+<!-- Brand Modal -->
+<div class="modal-overlay" id="modal-brand">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add / Edit Brand</div>
+      <button class="modal-close" onclick="closeModal('brand')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="brandEditId">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Brand Name *</label><input class="form-input" id="brandName" placeholder="e.g. Khaadi"></div>
+        <div class="form-group"><label class="form-label">Floor *</label><input class="form-input" id="brandFloor" placeholder="e.g. Level 2"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Brand Logo / Image</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" id="brandImageFile" onchange="previewFile(this,'brandImagePreview','brandImageData')">
+          <div class="upload-icon" style="font-size:1.5rem;margin-bottom:0.4rem">🖼️</div>
+          <div class="upload-text"><strong>Click to Upload Brand Logo</strong>Recommended: 300×200px, transparent PNG</div>
+        </div>
+        <div id="brandImagePreview" class="upload-preview"></div>
+        <input type="hidden" id="brandImageData">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('brand')">Cancel</button>
+      <button class="btn-save" onclick="saveBrand()">Save Brand</button>
+    </div>
+  </div>
+</div>
+
+<!-- Level Modal -->
+<div class="modal-overlay" id="modal-level">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add / Edit Floor Level</div>
+      <button class="modal-close" onclick="closeModal('level')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="levelEditId">
+      <div class="form-group"><label class="form-label">Floor Name *</label><input class="form-input" id="levelName" placeholder="e.g. Ground Floor"></div>
+      <div class="form-group"><label class="form-label">Shops Present *</label><textarea class="form-textarea" id="levelDesc" placeholder="e.g. Zara, Khaadi..."></textarea></div>
+      <div class="form-group">
+        <label class="form-label">Background Image *</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" id="levelImageFile" onchange="previewFile(this,'levelImagePreview','levelImageData')">
+          <div class="upload-text"><strong>Click to Upload Image</strong></div>
+        </div>
+        <div id="levelImagePreview" class="upload-preview"></div>
+        <input type="hidden" id="levelImageData">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('level')">Cancel</button>
+      <button class="btn-save" onclick="saveLevel()">Save Level</button>
+    </div>
+  </div>
+</div>
+
+<!-- Latest Brand Modal -->
+<div class="modal-overlay" id="modal-latestbrand">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add / Edit Latest Brand</div>
+      <button class="modal-close" onclick="closeModal('latestbrand')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="latestbrandEditId">
+      <div class="form-group"><label class="form-label">Brand Name *</label><input class="form-input" id="latestbrandName" placeholder="e.g. KHAAADI"></div>
+      <div class="form-group">
+        <label class="form-label">Brand Image *</label>
+        <div class="upload-area" style="padding:1.5rem">
+          <input type="file" accept="image/*" id="latestbrandImageFile" onchange="previewFile(this,'latestbrandImagePreview','latestbrandImageData')">
+          <div class="upload-text"><strong>Click to Upload Image</strong></div>
+        </div>
+        <div id="latestbrandImagePreview" class="upload-preview"></div>
+        <input type="hidden" id="latestbrandImageData">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('latestbrand')">Cancel</button>
+      <button class="btn-save" onclick="saveLatestBrand()">Save Brand</button>
+    </div>
+  </div>
+</div>
+
+<!-- Review Modal -->
+<div class="modal-overlay" id="modal-review">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add / Edit Review</div>
+      <button class="modal-close" onclick="closeModal('review')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="reviewEditId">
+      <div class="form-group"><label class="form-label">Reviewer Name *</label><input class="form-input" id="reviewName" placeholder="e.g. John Doe"></div>
+      <div class="form-group"><label class="form-label">Review Text *</label><textarea class="form-textarea" id="reviewText" placeholder="Great mall..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('review')">Cancel</button>
+      <button class="btn-save" onclick="saveReview()">Save Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ---- CMS STORE ----
+const CMS = {
+  defaults: {
+    categories:[
+      {id:1,icon:'👗',name:'Fashion & Apparel',desc:'From Pakistani designers to global fast fashion.',floor:'Level 2 & 3',image:''},
+      {id:2,icon:'💎',name:'Luxury & Jewellery',desc:'Exquisite fine jewellery, watches, and accessories.',floor:'Level 1',image:''},
+      {id:3,icon:'🍽️',name:'Fine Dining',desc:'Culinary journey across continents.',floor:'Level 5, 6 & 7',image:''},
+      {id:4,icon:'🎬',name:'Cinema & Entertainment',desc:'IMAX and luxury recliners.',floor:'Level 5 & 6',image:''},
+      {id:5,icon:'💻',name:'Electronics & Tech',desc:'Latest gadgets from authorised retailers.',floor:'Level 4',image:''},
+      {id:6,icon:'🌸',name:'Beauty & Wellness',desc:'Luxury spas, salons, and beauty counters.',floor:'Level 3',image:''},
+      {id:7,icon:'🏠',name:'Home & Living',desc:'Curated furniture and lifestyle brands.',floor:'Level 4',image:''},
+      {id:8,icon:'🧒',name:'Kids & Family',desc:'Adventure parks and family dining.',floor:'Level 4',image:''},
+    ],
+    brands:[
+      {id:1,name:'Khaadi',floor:'Level 2',image:''},
+      {id:2,name:'Sapphire',floor:'Level 2',image:''},
+      {id:3,name:'Outfitters',floor:'Level 3',image:''},
+      {id:4,name:'Zara',floor:'Level 3',image:''},
+      {id:5,name:'Levi\'s',floor:'Level 3',image:''},
+    ],
+    offers:[
+      {id:1,badge:'30% OFF',title:'End of Season Sale',store:'Khaadi',desc:'Massive discounts across the full collection.',validity:'Valid until 31 March 2026',image:''},
+      {id:2,badge:'BUY 2 GET 1',title:'Fragrance Festival',store:'MAC Cosmetics',desc:'Buy 2 fragrances, get the third free.',validity:'Valid until 25 March 2026',image:''},
+    ],
+    events:[
+      {id:1,day:'22',month:'Mar',year:'2026',category:'National Celebration',title:'Pakistan Day Grand Shopping Festival',time:'All Day · Entire Mall',images:[]},
+      {id:2,day:'28',month:'Mar',year:'2026',category:'Fashion',title:'Spring/Summer 2026 Designer Showcase',time:'3:00 PM – 9:00 PM · Grand Atrium',images:[]},
+    ],
+    levels:[
+      {id:1,name:'GROUND FLOOR',desc:'Jewellery, Luxury Brands, Bank...',image:''},
+      {id:2,name:'FIRST FLOOR',desc:'Fashion Entry, Department Store...',image:''},
+      {id:3,name:'SECOND FLOOR',desc:'Fashion (Pakistani), Books...',image:''}
+    ],
+    latestBrands:[
+      {id:1,name:'KHAAADI HOME',image:''},
+      {id:2,name:'ZARA',image:''}
+    ],
+    reviews: [
+      { id: 1, text: "An absolute joy! Exceptional variety, pleasant surroundings, and superb service. A one-stop destination for a fantastic day out. Thumbs up, The Blue!", name: "IRFAN AHMED" },
+      { id: 2, text: "The Blue Karachi is family bliss! Diverse shops, kids' joy, and great dining options. Our family had a fantastic time. You're our go-to destination!", name: "FIZZA KAMRAN" },
+      { id: 3, text: "The Blue caters to all ages with ease. Comfortable spaces, diverse shopping, and senior-friendly facilities. A perfect spot for us older folks. Appreciated!", name: "MR IKRAM" }
+    ],
+    facilities: [
+      {
+        id: 1,
+        name: 'FUN CITY',
+        image: '',
+        tag: 'Games & Attractions',
+        desc: 'Fun City Pakistan stands as a trailblazer in the realm of indoor Amusement Parks in the nation. It is located at The Centaurus Mall 4th floor. Within this exciting venue, Fun City Pakistan showcases a diverse array of world-class indoor amusement rides, arcade games, virtual reality experiences, and soft play facilities.\n\nFun City play a vital role in society by providing a platform for social interaction and active play in a safe, secure, and easily accessible environment. Their vision extends beyond the current offerings, as they are committed to extraordinary business expansion initiatives nationwide. These ventures will feature exclusive facilities meticulously designed to captivate the hearts of the enthusiastic and fun-loving population.'
+      },
+      {
+        id: 2,
+        name: 'CINEPLEX',
+        image: '',
+        tag: 'Premium Cinema',
+        desc: 'Experience the magic of cinema like never before. Our Cineplex offers the latest blockbusters in stunning 4K resolution with Dolby Atmos surround sound. Relax in our premium leather recliners and enjoy a curated selection of gourmet snacks.\n\nFrom international premieres to local hits, Cineplex is the heart of entertainment at The Blue Karachi. Our state-of-the-art screens and immersive technology ensure that every visit is an unforgettable journey into the world of film.'
+      },
+      {
+        id: 3,
+        name: 'EV SHOWROOM',
+        image: '',
+        tag: 'Modern Mobility',
+        desc: 'Step into the future of transportation at our flagship Electric Vehicle Showroom. Discover the latest models from world-leading EV manufacturers, featuring cutting-edge battery technology, sustainable materials, and autonomous driving capabilities.\n\nOur expert consultants are here to guide you through the benefits of electric mobility, from environmental impact to long-term cost savings. Experience a test drive today and be part of the green revolution.'
+      }
+    ],
+    settings: {
+      siteLogo: '',
+      splashEnabled: false,
+      splashImage: '',
+      splashText: '',
+      splashPos: 'center',
+      splashBtnEnabled: true
+    },
+    images:[],
+  },
+  get(k) { try { return JSON.parse(localStorage.getItem('tb_'+k)) || this.defaults[k]; } catch { return this.defaults[k]; } },
+  set(k,v) { 
+    try {
+      localStorage.setItem('tb_'+k,JSON.stringify(v)); 
+    } catch(e) {
+      if(e.name === 'QuotaExceededError' || e.message.includes('Quota')) {
+        if(typeof showToast === 'function') showToast('Storage Full! Please delete some old images.', 'error');
+        console.error('Storage quota exceeded.');
+      }
+    }
+  },
+};
+let editingId = null;
+let currentEventImages = [];
+
+function compressImage(dataUrl, callback) {
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    let width = img.width; let height = img.height; const max_size = 1920;
+    if (width > height && width > max_size) { height *= max_size/width; width = max_size; }
+    else if (height > max_size) { width *= max_size/height; height = max_size; }
+    canvas.width = width; canvas.height = height;
+    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+    const isPng = dataUrl.startsWith('data:image/png');
+    if (isPng) {
+      callback(canvas.toDataURL('image/png'));
+    } else {
+      callback(canvas.toDataURL('image/jpeg', 0.92));
+    }
+  };
+  img.src = dataUrl;
+}
+
+// ---- NAV ----
+document.querySelectorAll('.sb-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    link.classList.add('active');
+    const panel = link.dataset.panel;
+    document.getElementById('panel-'+panel)?.classList.add('active');
+    document.getElementById('topbarTitle').textContent = link.textContent.trim();
+    if(panel === 'dashboard') refreshDashboard();
+    if(panel === 'offers') renderOffersTable();
+    if(panel === 'events') renderEventsTable();
+    if(panel === 'categories') renderCatsTable();
+    if(panel === 'brands') renderBrandsTable();
+    if(panel === 'levels') renderLevelsTable();
+    if(panel === 'latestbrands') renderLatestBrandsTable();
+    if(panel === 'facilities') renderFacilitiesTable();
+    if(panel === 'reviews') renderReviewsTable();
+    if(panel === 'settings') fillSettingsForm();
+    if(panel === 'images') renderImageGrid();
+  });
+});
+
+// ---- DASHBOARD ----
+function refreshDashboard() {
+  document.getElementById('statOffers').textContent = CMS.get('offers').length;
+  document.getElementById('statEvents').textContent = CMS.get('events').length;
+  document.getElementById('statCats').textContent = CMS.get('categories').length;
+  document.getElementById('statImages').textContent = CMS.get('images').length;
+  
+  // Storage Check
+  const total = JSON.stringify(localStorage).length;
+  const mb = (total / (1024 * 1024)).toFixed(2);
+  const pc = ((total / (5 * 1024 * 1024)) * 100).toFixed(0);
+  document.getElementById('statStorage').textContent = mb + 'MB';
+  document.getElementById('statPercent').textContent = pc + '% Used';
+  if(pc > 80) document.getElementById('statPercent').style.color = 'var(--danger)'; 
+  else document.getElementById('statPercent').style.color = 'var(--grey)';
+}
+refreshDashboard();
+
+// ---- OFFERS TABLE ----
+function renderOffersTable() {
+  const offers = CMS.get('offers');
+  const tbody = document.getElementById('offersTableBody');
+  tbody.innerHTML = offers.length ? offers.map(o => `
+    <tr>
+      <td style="color:var(--gold);font-weight:700">${o.badge}</td>
+      <td>${o.title}</td>
+      <td>${o.store}</td>
+      <td style="font-size:0.75rem;color:var(--grey)">${o.validity}</td>
+      <td><span class="badge-active">Active</span></td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editOffer(${o.id})">Edit</button>
+        <button class="btn-del" onclick="deleteOffer(${o.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="6" style="color:var(--grey);text-align:center;padding:2rem">No offers yet. Click "+ Add Offer" to create your first offer.</td></tr>`;
+}
+
+function saveOffer() {
+  const badge = document.getElementById('offerBadge').value.trim();
+  const title = document.getElementById('offerTitle').value.trim();
+  const store = document.getElementById('offerStore').value.trim();
+  if(!badge||!title||!store) { showToast('Please fill required fields','error'); return; }
+  const offers = CMS.get('offers');
+  const obj = {
+    id: editingId || Date.now(),
+    badge, title, store,
+    desc: document.getElementById('offerDesc').value,
+    validity: document.getElementById('offerValidity').value,
+    image: document.getElementById('offerImageData').value,
+  };
+  if(editingId) {
+    const i = offers.findIndex(o=>o.id===editingId);
+    if(i>-1) offers[i]=obj;
+  } else { offers.push(obj); }
+  CMS.set('offers',offers);
+  closeModal('offer'); renderOffersTable(); addActivity(`Offer "${title}" saved`,'gold');
+  showToast('Offer saved successfully!'); refreshDashboard();
+}
+
+function editOffer(id) {
+  const offers = CMS.get('offers');
+  const o = offers.find(x=>x.id===id); if(!o) return;
+  editingId = id;
+  document.getElementById('offerBadge').value = o.badge;
+  document.getElementById('offerTitle').value = o.title;
+  document.getElementById('offerStore').value = o.store;
+  document.getElementById('offerDesc').value = o.desc||'';
+  document.getElementById('offerValidity').value = o.validity||'';
+  document.getElementById('offerImageData').value = o.image||'';
+  document.getElementById('offerModalTitle').textContent = 'Edit Offer';
+  if(o.image) document.getElementById('offerImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${o.image}"></div>`;
+  openModal('offer');
+}
+
+function deleteOffer(id) {
+  if(!confirm('Delete this offer?')) return;
+  const offers = CMS.get('offers').filter(o=>o.id!==id);
+  CMS.set('offers',offers); renderOffersTable(); showToast('Offer deleted'); refreshDashboard();
+}
+
+// ---- EVENTS TABLE ----
+function renderEventsTable() {
+  const events = CMS.get('events');
+  const tbody = document.getElementById('eventsTableBody');
+  tbody.innerHTML = events.length ? events.map(e => `
+    <tr>
+      <td style="color:var(--gold);font-family:'Cinzel',serif;font-weight:700">${e.day} ${e.month} ${e.year}</td>
+      <td>${e.title}</td>
+      <td style="color:var(--gold-dim)">${e.category}</td>
+      <td style="font-size:0.78rem;color:var(--grey)">${e.time}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editEvent(${e.id})">Edit</button>
+        <button class="btn-del" onclick="deleteEvent(${e.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="5" style="color:var(--grey);text-align:center;padding:2rem">No events yet.</td></tr>`;
+}
+
+function handleMultipleEventImages(input) {
+  const files = Array.from(input.files);
+  let processed = 0;
+  files.forEach(file => {
+    if(file.size > 30*1024*1024) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      compressImage(e.target.result, compressed => {
+        currentEventImages.push(compressed);
+        processed++;
+        if(processed === files.length) {
+          renderEventImages();
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderEventImages() {
+  const prev = document.getElementById('eventImagePreview');
+  prev.innerHTML = currentEventImages.map((src, i) => `
+    <div class="preview-img-wrap">
+      <img class="preview-img" src="${src}">
+      <button class="preview-remove" onclick="removeEventImage(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function removeEventImage(index) {
+  currentEventImages.splice(index, 1);
+  renderEventImages();
+}
+
+function saveEvent() {
+  const title = document.getElementById('eventTitle').value.trim();
+  const day = document.getElementById('eventDay').value.trim();
+  if(!title||!day) { showToast('Please fill required fields','error'); return; }
+  const events = CMS.get('events');
+  const obj = {
+    id: editingId || Date.now(),
+    day, month: document.getElementById('eventMonth').value,
+    year: document.getElementById('eventYear').value,
+    category: document.getElementById('eventCategory').value,
+    title, time: document.getElementById('eventTime').value,
+    images: [...currentEventImages],
+  };
+  if(editingId) {
+    const i = events.findIndex(e=>e.id===editingId);
+    if(i>-1) events[i]=obj;
+  } else { events.push(obj); }
+  CMS.set('events',events);
+  closeModal('event'); renderEventsTable(); addActivity(`Event "${title}" saved`,'green');
+  showToast('Event saved!'); refreshDashboard();
+}
+
+function editEvent(id) {
+  const events = CMS.get('events');
+  const e = events.find(x=>x.id===id); if(!e) return;
+  editingId = id;
+  document.getElementById('eventDay').value = e.day;
+  document.getElementById('eventMonth').value = e.month;
+  document.getElementById('eventYear').value = e.year;
+  document.getElementById('eventCategory').value = e.category;
+  document.getElementById('eventTitle').value = e.title;
+  document.getElementById('eventTime').value = e.time;
+  currentEventImages = Array.isArray(e.images) ? [...e.images] : (e.image ? [e.image] : []);
+  renderEventImages();
+  document.getElementById('eventModalTitle').textContent = 'Edit Event';
+  openModal('event');
+}
+
+function deleteEvent(id) {
+  if(!confirm('Delete this event?')) return;
+  CMS.set('events', CMS.get('events').filter(e=>e.id!==id));
+  renderEventsTable(); showToast('Event deleted'); refreshDashboard();
+}
+
+// ---- CATEGORIES TABLE ----
+function renderCatsTable() {
+  const cats = CMS.get('categories');
+  const tbody = document.getElementById('catsTableBody');
+  tbody.innerHTML = cats.map((c,i) => `
+    <tr>
+      <td style="color:var(--gold-dim);font-family:'Cinzel',serif">${String(i+1).padStart(2,'0')}</td>
+      <td style="font-size:1.4rem">${c.icon}</td>
+      <td style="font-weight:500">${c.name}</td>
+      <td style="font-size:0.78rem;color:var(--grey);max-width:200px">${c.desc}</td>
+      <td style="color:var(--gold-dim)">${c.floor}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editCat(${c.id})">Edit</button>
+        <button class="btn-del" onclick="deleteCat(${c.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function saveCategory() {
+  const name = document.getElementById('catName').value.trim();
+  const icon = document.getElementById('catIcon').value.trim();
+  if(!name||!icon) { showToast('Name and icon required','error'); return; }
+  const cats = CMS.get('categories');
+  const obj = { id: editingId||Date.now(), icon, name, desc: document.getElementById('catDesc').value, floor: document.getElementById('catFloor').value, image: document.getElementById('catImageData').value };
+  if(editingId) { const i=cats.findIndex(c=>c.id===editingId); if(i>-1) cats[i]=obj; } else cats.push(obj);
+  CMS.set('categories',cats); closeModal('category'); renderCatsTable(); showToast('Category saved!'); refreshDashboard();
+}
+
+function editCat(id) {
+  const c = CMS.get('categories').find(x=>x.id===id); if(!c) return;
+  editingId = id;
+  document.getElementById('catIcon').value = c.icon;
+  document.getElementById('catName').value = c.name;
+  document.getElementById('catDesc').value = c.desc;
+  document.getElementById('catFloor').value = c.floor;
+  document.getElementById('catImageData').value = c.image||'';
+  if(c.image) document.getElementById('catImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${c.image}"></div>`;
+  openModal('category');
+}
+
+function deleteCat(id) {
+  if(!confirm('Delete this category?')) return;
+  CMS.set('categories', CMS.get('categories').filter(c=>c.id!==id));
+  renderCatsTable(); showToast('Category deleted'); refreshDashboard();
+}
+
+// ---- BRANDS TABLE ----
+function renderBrandsTable() {
+  const brands = CMS.get('brands');
+  const tbody = document.getElementById('brandsTableBody');
+  tbody.innerHTML = brands.map(b => `
+    <tr>
+      <td style="font-family:'Cinzel',serif;font-weight:600">${b.name}</td>
+      <td>${b.floor}</td>
+      <td>${b.image ? `<img src="${b.image}" style="height:36px;border:1px solid var(--border)">` : '<span style="color:var(--grey);font-size:0.75rem">No image</span>'}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editBrand(${b.id})">Edit</button>
+        <button class="btn-del" onclick="deleteBrand(${b.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function saveBrand() {
+  const name = document.getElementById('brandName').value.trim();
+  if(!name) { showToast('Brand name required','error'); return; }
+  const brands = CMS.get('brands');
+  const obj = { id: editingId||Date.now(), name, floor: document.getElementById('brandFloor').value, image: document.getElementById('brandImageData').value };
+  if(editingId) { const i=brands.findIndex(b=>b.id===editingId); if(i>-1) brands[i]=obj; } else brands.push(obj);
+  CMS.set('brands',brands); closeModal('brand'); renderBrandsTable(); showToast('Brand saved!');
+}
+
+function editBrand(id) {
+  const b = CMS.get('brands').find(x=>x.id===id); if(!b) return;
+  editingId = id;
+  document.getElementById('brandName').value = b.name;
+  document.getElementById('brandFloor').value = b.floor;
+  document.getElementById('brandImageData').value = b.image||'';
+  if(b.image) document.getElementById('brandImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${b.image}"></div>`;
+  openModal('brand');
+}
+
+function deleteBrand(id) {
+  if(!confirm('Delete this brand?')) return;
+  CMS.set('brands', CMS.get('brands').filter(b=>b.id!==id));
+  renderBrandsTable(); showToast('Brand deleted');
+}
+
+// ---- LEVELS TABLE ----
+function renderLevelsTable() {
+  const levels = CMS.get('levels');
+  const tbody = document.getElementById('levelsTableBody');
+  tbody.innerHTML = levels.length ? levels.map(l => `
+    <tr>
+      <td style="font-family:'Cinzel',serif;font-weight:600">${l.name}</td>
+      <td style="font-size:0.78rem;color:var(--grey);max-width:200px">${l.desc}</td>
+      <td>${l.image ? `<img src="${l.image}" style="height:36px;border:1px solid var(--border)">` : '<span style="color:var(--grey);font-size:0.75rem">No image</span>'}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editLevel(${l.id})">Edit</button>
+        <button class="btn-del" onclick="deleteLevel(${l.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="4" style="color:var(--grey);text-align:center;padding:2rem">No floors added.</td></tr>`;
+}
+
+function saveLevel() {
+  const name = document.getElementById('levelName').value.trim();
+  if(!name) { showToast('Floor name required','error'); return; }
+  const levels = CMS.get('levels');
+  const obj = { id: editingId||Date.now(), name, desc: document.getElementById('levelDesc').value, image: document.getElementById('levelImageData').value };
+  if(editingId) { const i=levels.findIndex(l=>l.id===editingId); if(i>-1) levels[i]=obj; } else levels.push(obj);
+  CMS.set('levels',levels); closeModal('level'); renderLevelsTable(); showToast('Level saved!');
+}
+
+function editLevel(id) {
+  const l = CMS.get('levels').find(x=>x.id===id); if(!l) return;
+  editingId = id;
+  document.getElementById('levelName').value = l.name;
+  document.getElementById('levelDesc').value = l.desc||'';
+  document.getElementById('levelImageData').value = l.image||'';
+  if(l.image) document.getElementById('levelImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${l.image}"></div>`;
+  openModal('level');
+}
+
+function deleteLevel(id) {
+  if(!confirm('Delete this level?')) return;
+  CMS.set('levels', CMS.get('levels').filter(l=>l.id!==id));
+  renderLevelsTable(); showToast('Level deleted');
+}
+
+// ---- LATEST BRANDS TABLE ----
+function renderLatestBrandsTable() {
+  const t = CMS.get('latestBrands');
+  const tbody = document.getElementById('latestbrandsTableBody');
+  tbody.innerHTML = t.length ? t.map(b => `
+    <tr>
+      <td style="font-family:'Cinzel',serif;font-weight:600">${b.name}</td>
+      <td>${b.image ? `<img src="${b.image}" style="height:36px;border:1px solid var(--border)">` : '<span style="color:var(--grey);font-size:0.75rem">No image</span>'}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editLatestBrand(${b.id})">Edit</button>
+        <button class="btn-del" onclick="deleteLatestBrand(${b.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="3" style="color:var(--grey);text-align:center;padding:2rem">No latest brands added.</td></tr>`;
+}
+
+function saveLatestBrand() {
+  const name = document.getElementById('latestbrandName').value.trim();
+  if(!name) { showToast('Brand name required','error'); return; }
+  const lb = CMS.get('latestBrands');
+  const obj = { id: editingId||Date.now(), name, image: document.getElementById('latestbrandImageData').value };
+  if(editingId) { const i=lb.findIndex(b=>b.id===editingId); if(i>-1) lb[i]=obj; } else lb.push(obj);
+  CMS.set('latestBrands',lb); closeModal('latestbrand'); renderLatestBrandsTable(); showToast('Latest Brand saved!');
+}
+
+function editLatestBrand(id) {
+  const b = CMS.get('latestBrands').find(x=>x.id===id); if(!b) return;
+  editingId = id;
+  document.getElementById('latestbrandName').value = b.name;
+  document.getElementById('latestbrandImageData').value = b.image||'';
+  if(b.image) document.getElementById('latestbrandImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${b.image}"></div>`;
+  openModal('latestbrand');
+}
+
+function deleteLatestBrand(id) {
+  if(!confirm('Delete this latest brand?')) return;
+  CMS.set('latestBrands', CMS.get('latestBrands').filter(b=>b.id!==id));
+  renderLatestBrandsTable(); showToast('Latest Brand deleted');
+}
+
+// ---- REVIEWS TABLE ----
+function renderReviewsTable() {
+  const revs = CMS.get('reviews');
+  const tbody = document.getElementById('reviewsTableBody');
+  tbody.innerHTML = revs.length ? revs.map(r => `
+    <tr>
+      <td style="font-weight:600">${r.name}</td>
+      <td style="color:var(--grey);max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${r.text}">${r.text}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editReview(${r.id})">Edit</button>
+        <button class="btn-del" onclick="deleteReview(${r.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="3" style="color:var(--grey);text-align:center;padding:2rem">No reviews added.</td></tr>`;
+}
+
+function saveReview() {
+  const name = document.getElementById('reviewName').value.trim();
+  const text = document.getElementById('reviewText').value.trim();
+  if(!name || !text) { showToast('Name and Text are required','error'); return; }
+  const revs = CMS.get('reviews');
+  const obj = { id: editingId || Date.now(), name, text };
+  if(editingId) { const i=revs.findIndex(r=>r.id===editingId); if(i>-1) revs[i]=obj; } else revs.push(obj);
+  CMS.set('reviews', revs); closeModal('review'); renderReviewsTable(); showToast('Review saved!');
+}
+
+function editReview(id) {
+  const r = CMS.get('reviews').find(x=>x.id===id); if(!r) return;
+  editingId = id;
+  document.getElementById('reviewName').value = r.name || '';
+  document.getElementById('reviewText').value = r.text || '';
+  openModal('review');
+}
+
+function deleteReview(id) {
+  if(!confirm('Delete this review?')) return;
+  CMS.set('reviews', CMS.get('reviews').filter(r=>r.id!==id));
+  renderReviewsTable(); showToast('Review deleted');
+}
+
+// ---- SETTINGS ----
+function fillSettingsForm() {
+  const s = CMS.get('settings');
+  document.getElementById('siteLogoImageData')?.setAttribute('value', s.siteLogo||'');
+  document.getElementById('settingsLogoData').value = s.siteLogo || '';
+  if(s.siteLogo) document.getElementById('settingsLogoPreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${s.siteLogo}"></div>`;
+  
+  document.getElementById('splashEnabled').checked = !!s.splashEnabled;
+  document.getElementById('splashBtnEnabled').checked = !!s.splashBtnEnabled;
+  document.getElementById('splashText').value = s.splashText || '';
+  document.getElementById('splashPos').value = s.splashPos || 'center';
+  document.getElementById('splashImageData').value = s.splashImage || '';
+  if(s.splashImage) document.getElementById('splashImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${s.splashImage}"></div>`;
+}
+
+function saveSettingsForm() {
+  const settings = CMS.get('settings');
+  settings.siteLogo = document.getElementById('settingsLogoData').value;
+  settings.splashEnabled = document.getElementById('splashEnabled').checked;
+  settings.splashImage = document.getElementById('splashImageData').value;
+  settings.splashText = document.getElementById('splashText').value;
+  settings.splashPos = document.getElementById('splashPos').value;
+  settings.splashBtnEnabled = document.getElementById('splashBtnEnabled').checked;
+  
+  CMS.set('settings', settings);
+  showToast('Settings saved successfully!');
+}
+
+// ---- IMAGE MANAGER ----
+function handleBulkUpload(input) {
+  const files = Array.from(input.files);
+  const images = CMS.get('images');
+  let processed = 0;
+  files.forEach(file => {
+    if(file.size > 30*1024*1024) { showToast(`${file.name} exceeds 30MB`,'error'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      compressImage(e.target.result, compressed => {
+        images.push({ id:Date.now()+Math.random(), name:file.name, data:compressed, size:file.size, type:file.type });
+        processed++;
+        if(processed===files.length) {
+          CMS.set('images',images); renderImageGrid();
+          showToast(`${files.length} image(s) uploaded!`); refreshDashboard();
+          addActivity(`${files.length} image(s) uploaded`,'blue');
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+function renderImageGrid() {
+  const images = CMS.get('images');
+  const grid = document.getElementById('imageGrid');
+  if(!images.length) { grid.innerHTML = '<div class="img-empty">No images yet. Upload your first image above.</div>'; return; }
+  grid.innerHTML = images.map(img => `
+    <div class="img-card">
+      <img src="${img.data}" alt="${img.name}">
+      <div class="img-card-info">
+        <span class="img-card-name" title="${img.name}">${img.name}</span>
+        <div class="img-card-actions">
+          <button class="btn-copy" onclick="copyImageUrl('${img.id}')" title="Copy URL">📋</button>
+          <button class="btn-del-sm" onclick="deleteImage('${img.id}')" title="Delete">🗑</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function copyImageUrl(id) {
+  const img = CMS.get('images').find(i=>i.id==id);
+  if(img) { navigator.clipboard?.writeText(img.data); showToast('Image URL copied!'); }
+}
+
+function deleteImage(id) {
+  if(!confirm('Delete this image?')) return;
+  CMS.set('images', CMS.get('images').filter(i=>i.id!=id));
+  renderImageGrid(); showToast('Image deleted'); refreshDashboard();
+}
+
+// ---- FILE PREVIEW ----
+function previewFile(input, previewId, dataId) {
+  const file = input.files[0]; if(!file) return;
+  if(file.size > 30*1024*1024) { showToast('File exceeds 30MB','error'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    compressImage(e.target.result, compressed => {
+      document.getElementById(dataId).value = compressed;
+      document.getElementById(previewId).innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${compressed}"></div>`;
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+// ---- DROP ZONE ----
+const dropZone = document.getElementById('dropZone');
+if(dropZone) {
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('dragover');
+    const dt = { files: e.dataTransfer.files };
+    handleBulkUpload(dt);
+  });
+}
+
+// ---- MODAL ----
+function openModal(type) {
+  if(type !== 'offer' && type !== 'event' && type !== 'category' && type !== 'brand' && type !== 'level' && type !== 'latestbrand' && type !== 'review' && type !== 'facility') editingId = null;
+  if(!editingId && type === 'event') {
+    currentEventImages = [];
+    document.getElementById('eventImagePreview').innerHTML = '';
+  }
+  document.getElementById('modal-'+type).classList.add('open');
+}
+function closeModal(type) {
+  document.getElementById('modal-'+type).classList.remove('open');
+  // Reset previews
+  ['offerImagePreview','eventImagePreview','brandImagePreview','catImagePreview','levelImagePreview','latestbrandImagePreview','facilityImagePreview'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.innerHTML='';
+  });
+  ['offerImageData','eventImageData','brandImageData','catImageData','levelImageData','latestbrandImageData','facilityImageData'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  
+  if (type === 'review') {
+    document.getElementById('reviewName').value = '';
+    document.getElementById('reviewText').value = '';
+  }
+  
+  editingId = null;
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) { const t=m.id.replace('modal-',''); closeModal(t); } });
+});
+
+// ---- FACILITIES TABLE ----
+function renderFacilitiesTable() {
+  const facilities = CMS.get('facilities');
+  const tbody = document.getElementById('facilitiesTableBody');
+  tbody.innerHTML = facilities.length ? facilities.map(f => `
+    <tr>
+      <td style="font-family:'Cinzel',serif;font-weight:600">${f.name}</td>
+      <td style="color:var(--gold-dim)">${f.tag}</td>
+      <td>${f.image ? `<img src="${f.image}" style="height:40px;width:30px;object-fit:cover;border:1px solid var(--border)">` : '<span style="color:var(--grey);font-size:0.75rem">No image</span>'}</td>
+      <td class="td-actions">
+        <button class="btn-edit" onclick="editFacility(${f.id})">Edit</button>
+        <button class="btn-del" onclick="deleteFacility(${f.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="4" style="color:var(--grey);text-align:center;padding:2rem">No facilities yet.</td></tr>`;
+}
+
+function saveFacility() {
+  const name = document.getElementById('facilityName').value.trim();
+  const tag = document.getElementById('facilityTag').value.trim();
+  const desc = document.getElementById('facilityDesc').value.trim();
+  if(!name || !tag || !desc) { showToast('Please fill all required fields','error'); return; }
+  const facilities = CMS.get('facilities');
+  const obj = { id: editingId||Date.now(), name, tag, desc, image: document.getElementById('facilityImageData').value };
+  if(editingId) { const i=facilities.findIndex(f=>f.id===editingId); if(i>-1) facilities[i]=obj; } else facilities.push(obj);
+  CMS.set('facilities',facilities); closeModal('facility'); renderFacilitiesTable(); showToast('Facility saved!');
+}
+
+function editFacility(id) {
+  const f = CMS.get('facilities').find(x=>x.id===id); if(!f) return;
+  editingId = id;
+  document.getElementById('facilityName').value = f.name;
+  document.getElementById('facilityTag').value = f.tag;
+  document.getElementById('facilityDesc').value = f.desc;
+  document.getElementById('facilityImageData').value = f.image||'';
+  if(f.image) document.getElementById('facilityImagePreview').innerHTML = `<div class="preview-img-wrap"><img class="preview-img" src="${f.image}"></div>`;
+  document.getElementById('facilityModalTitle').textContent = 'Edit Facility';
+  openModal('facility');
+}
+
+function deleteFacility(id) {
+  if(!confirm('Delete this facility?')) return;
+  CMS.set('facilities', CMS.get('facilities').filter(f=>f.id!==id));
+  renderFacilitiesTable(); showToast('Facility deleted');
+}
+
+// ---- TOAST ----
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type==='error'?' error':'');
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ---- ACTIVITY ----
+function addActivity(msg, type='gold') {
+  const list = document.getElementById('activityList');
+  const item = document.createElement('div');
+  item.className = 'activity-item';
+  item.innerHTML = `<div class="ai-dot ${type}"></div>${msg}<div class="ai-time">Just now</div>`;
+  list.prepend(item);
+}
+
+// ---- EXPORT ----
+function exportData() {
+  const data = { categories:CMS.get('categories'), brands:CMS.get('brands'), offers:CMS.get('offers'), events:CMS.get('events') };
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'theblue-data.json'; a.click();
+  showToast('Data exported!');
+}
+
+function resetToDefaults() {
+  if(!confirm('This will reset all content to default. Are you sure?')) return;
+  ['categories','brands','offers','events'].forEach(k => CMS.set(k, CMS.defaults[k]));
+  showToast('Reset to defaults!'); refreshDashboard();
+}
+</script>
+</body>
+</html>

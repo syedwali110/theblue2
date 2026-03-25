@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Facilities — The Blue Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  .sec { padding: 8rem 0; position: relative; }
+  .sec.dark { background: #071018; }
+  .sec.ptn::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 2px 2px,rgba(201,146,26,.06) 1px,transparent 0); background-size: 38px 38px; pointer-events: none; }
+  
+  /* FACILITIES GRID */
+  .fac-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
+  .fac-card {
+    position: relative; aspect-ratio: 9/14; overflow: hidden; border-radius: 4px; cursor: pointer;
+    background: var(--navy-deep); border: 1px solid rgba(255,255,255,0.05); transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+  .fac-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+  .fac-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.8s ease; filter: brightness(0.6); }
+  .fac-card:hover .fac-bg { transform: scale(1.1); filter: brightness(0.8); }
+  .fac-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, rgba(7,16,24,0.9)); display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem 2rem; }
+  .fac-tag { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.8; }
+  .fac-name { font-family: 'Korataki', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 1.2rem; letter-spacing: 0.05em; }
+  .fac-btn { 
+    align-self: flex-start; padding: 0.8rem 1.6rem; border: 1px solid var(--gold); background: transparent; color: var(--gold); 
+    font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+    opacity: 0; transform: translateY(10px);
+  }
+  .fac-card:hover .fac-btn { opacity: 1; transform: translateY(0); }
+  .fac-btn:hover { background: var(--gold); color: var(--navy-deep); }
+
+  /* DETAIL MODAL */
+  .fac-detail-modal { position: fixed; inset: 0; background: rgba(7,16,24,0.98); backdrop-filter: blur(15px); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s; padding: 2rem; }
+  .fac-detail-modal.active { opacity: 1; visibility: visible; }
+  .fac-detail-content { background: var(--navy-deep); border: 1px solid var(--gold-faint); max-width: 1000px; width: 100%; display: grid; grid-template-columns: 45% 55%; max-height: 85vh; overflow: hidden; transform: scale(0.95); transition: transform 0.4s; }
+  .fac-detail-modal.active .fac-detail-content { transform: scale(1); }
+  .fac-detail-img { background-size: cover; background-position: center; }
+  .fac-detail-info { padding: 3.5rem; overflow-y: auto; display: flex; flex-direction: column; }
+  .fac-detail-header { border-bottom: 1px solid var(--gold-faint); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .fac-detail-tag { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .fac-detail-name { font-family: 'Korataki', sans-serif; font-size: 2.2rem; color: #fff; letter-spacing: 0.1em; }
+  .fac-detail-text { font-size: 1.05rem; line-height: 1.8; color: rgba(240,236,226,0.8); white-space: pre-line; }
+  .fac-close-btn { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: #fff; cursor: pointer; transition: color 0.3s; }
+  .fac-close-btn:hover { color: var(--gold); }
+
+  @media(max-width:900px) {
+    .fac-grid { grid-template-columns: repeat(2, 1fr); }
+    .fac-detail-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+    .fac-detail-img { height: 300px; }
+    .fac-detail-info { padding: 2rem; }
+  }
+  @media(max-width:600px) { .fac-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="cur-dot"></div><div id="cur-ring"></div>
+<div id="loader"></div>
+<nav id="nav"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-badge">Mall Directory</div>
+  <h1 class="page-hero-title">Premier Facilities</h1>
+  <p class="page-hero-sub">Discover world-class entertainment, automotive, and fitness experiences</p>
+</div>
+<div id="ticker"></div>
+
+<section class="sec dark ptn">
+  <div class="container">
+    <div data-r style="margin-bottom:3rem;text-align:center">
+      <div class="section-lbl" style="justify-content:center"><span></span>Explore The Blue</div>
+      <h2 class="section-h" style="text-align:center">Our Signature <em>Facilities</em></h2>
+    </div>
+    <div class="fac-grid" id="facilitiesGrid"></div>
+  </div>
+</section>
+
+<!-- FACILITY DETAIL MODAL -->
+<div class="fac-detail-modal" id="facDetailModal">
+  <div class="fac-close-btn" onclick="closeFacDetail()">✕</div>
+  <div class="fac-detail-content">
+    <div class="fac-detail-img" id="facDetailImg"></div>
+    <div class="fac-detail-info">
+      <div class="fac-detail-header">
+        <div class="fac-detail-tag" id="facDetailTag">TAGLINE</div>
+        <div class="fac-detail-name" id="facDetailName">FACILITY NAME</div>
+      </div>
+      <div class="fac-detail-text" id="facDetailText">Loading content...</div>
+    </div>
+  </div>
+</div>
+
+<footer id="footer"></footer>
+<script src="shared.js"></script>
+<script>
+  initAll('facilities.html');
+  
+  function renderFacilities() {
+    const facilities = CMS.get('facilities');
+    const container = document.getElementById('facilitiesGrid');
+    if (!container) return;
+    
+    container.innerHTML = facilities.map(f => `
+      <div class="fac-card" data-r onclick="openFacDetail(${f.id})">
+        <div class="fac-bg" style="background-image: url('${f.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800'}')"></div>
+        <div class="fac-overlay">
+          <div class="fac-tag">${f.tag}</div>
+          <div class="fac-name">${f.name}</div>
+          <div class="fac-btn">Explore More</div>
+        </div>
+      </div>
+    `).join('');
+    if (typeof initReveal === 'function') initReveal();
+  }
+
+  window.openFacDetail = (id) => {
+    const f = CMS.get('facilities').find(x => x.id === id);
+    if (!f) return;
+    document.getElementById('facDetailImg').style.backgroundImage = `url('${f.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800'}')`;
+    document.getElementById('facDetailTag').textContent = f.tag;
+    document.getElementById('facDetailName').textContent = f.name;
+    document.getElementById('facDetailText').textContent = f.desc;
+    document.getElementById('facDetailModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeFacDetail = () => {
+    document.getElementById('facDetailModal').classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFacDetail(); });
+  document.getElementById('facDetailModal')?.addEventListener('click', e => { if (e.target.id === 'facDetailModal') closeFacDetail(); });
+
+  renderFacilities();
+</script>
+</body>
+</html>

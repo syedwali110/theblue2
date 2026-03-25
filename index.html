@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Blue Karachi — Karachi's Premier Destination</title>
+  <meta name="description"
+    content="The Blue Karachi — Where luxury meets culture. Karachi's most iconic shopping, dining and entertainment destination.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&family=IM+Fell+English:ital@0;1&display=swap"
+    rel="stylesheet">
+  <style>
+    /* HOME-SPECIFIC STYLES */
+    #hero {
+      height: 100vh;
+      min-height: 700px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .h-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 100% 80% at 50% 40%, #0f2540 0%, #071018 55%, #030a10 100%)
+    }
+
+    #particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none
+    }
+
+    .h-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(7, 16, 24, 1) 0%, rgba(7, 16, 24, 0) 20%), linear-gradient(180deg, rgba(7, 16, 24, .65) 0%, transparent 18%);
+      pointer-events: none
+    }
+
+    .h-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .85rem
+    }
+
+    .h-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: .72rem;
+      letter-spacing: .55em;
+      color: #c9921a;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      opacity: 0;
+      animation: fup .8s ease .4s forwards
+    }
+
+    .h-eye-line {
+      width: 45px;
+      height: 1px;
+      background: #c9921a;
+      opacity: .5
+    }
+
+    .h-motif {
+      opacity: 0;
+      animation: fup .9s ease .7s forwards
+    }
+
+    .h-motif svg {
+      width: 170px;
+      height: 170px;
+      filter: drop-shadow(0 0 28px rgba(201, 146, 26, .4))
+    }
+
+    .h-title {
+      font-family: 'Korataki', sans-serif;
+      line-height: .95;
+      opacity: 0;
+      animation: fup .9s ease 1s forwards
+    }
+
+    .h-title .the {
+      display: block;
+      font-size: clamp(2.2rem, 6vw, 5.5rem);
+      font-weight: 400;
+      color: rgba(240, 236, 226, .9);
+      letter-spacing: .5em
+    }
+
+    .h-title .blue {
+      display: block;
+      font-size: clamp(4.5rem, 13vw, 12rem);
+      font-weight: 700;
+      letter-spacing: .08em;
+      background: linear-gradient(180deg, #fff 0%, #e8d4a0 55%, #c9921a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 60px rgba(201, 146, 26, .25))
+    }
+
+    .h-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      opacity: 0;
+      animation: fup .7s ease 1.3s forwards
+    }
+
+    .h-div-orn {
+      color: #c9921a;
+      font-size: 1.1rem
+    }
+
+    .h-div-txt {
+      font-family: 'Korataki', sans-serif;
+      font-size: 1rem;
+      letter-spacing: .7em;
+      color: #c9921a
+    }
+
+    .h-tagline {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: #d4cfc3;
+      opacity: 0;
+      animation: fup .7s ease 1.5s forwards
+    }
+
+    .h-btns {
+      display: flex;
+      gap: 1.5rem;
+      opacity: 0;
+      animation: fup .7s ease 1.8s forwards;
+      margin-top: .4rem;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .h-stats {
+      position: absolute;
+      bottom: 6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      background: rgba(7, 16, 24, .65);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201, 146, 26, .2);
+      padding: 1.2rem 3rem;
+      opacity: 0;
+      animation: fup .7s ease 2s forwards
+    }
+
+    .hst {
+      text-align: center
+    }
+
+    .hst-n {
+      font-family: 'Cinzel', serif;
+      font-size: 1.7rem;
+      color: #e8b84b;
+      display: block;
+      line-height: 1
+    }
+
+    .hst-l {
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #7a7a7a;
+      display: block;
+      margin-top: .3rem
+    }
+
+    .hst-d {
+      width: 1px;
+      height: 38px;
+      background: rgba(201, 146, 26, .22)
+    }
+
+    .h-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      font-size: .58rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: #8a6010;
+      opacity: 0;
+      animation: fup .7s ease 2.2s forwards
+    }
+
+    .h-scroll-line {
+      width: 1px;
+      height: 46px;
+      background: linear-gradient(#c9921a, transparent);
+      animation: scrollP 2s ease infinite
+    }
+
+    @keyframes scrollP {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top
+      }
+
+      50% {
+        transform: scaleY(1);
+        transform-origin: top
+      }
+
+      51% {
+        transform: scaleY(1);
+        transform-origin: bottom
+      }
+
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom
+      }
+    }
+
+    @keyframes fup {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    /* SECTIONS */
+    .sec-home {
+      padding: 8rem 0;
+      position: relative
+    }
+
+    .sec-home.dark {
+      background: linear-gradient(180deg, #071018 0%, #081520 50%, #071018 100%)
+    }
+
+    .sec-home.pattern {
+      background: #071018
+    }
+
+    .sec-home.pattern::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 2px 2px, rgba(201, 146, 26, .06) 1px, transparent 0);
+      background-size: 38px 38px;
+      pointer-events: none
+    }
+
+    /* ABOUT STRIP */
+    .about-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center
+    }
+
+    .as-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem
+    }
+
+    .as-body {
+      font-size: .98rem;
+      color: #d4cfc3;
+      line-height: 1.85;
+      opacity: .85
+    }
+
+    .as-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      margin-top: .5rem
+    }
+
+    .pillar {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding: .9rem 1.1rem;
+      border: 1px solid rgba(201, 146, 26, .2);
+      background: rgba(26, 58, 92, .12);
+      transition: all .3s
+    }
+
+    .pillar:hover {
+      border-color: #c9921a;
+      background: rgba(201, 146, 26, .08)
+    }
+
+    .pillar-ico {
+      color: #c9921a;
+      font-size: 1rem
+    }
+
+    .pillar strong {
+      font-size: .9rem;
+      font-weight: 600;
+      color: #f0ece2;
+      letter-spacing: .05em;
+      display: block
+    }
+
+    .pillar span {
+      font-size: .78rem;
+      color: #7a7a7a
+    }
+
+    .as-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem
+    }
+
+    .as-visual {
+      border: 1px solid rgba(201, 146, 26, .22);
+      background: linear-gradient(135deg, #0d2137, #071018);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative
+    }
+
+    .asv-inner {
+      position: relative
+    }
+
+    .asv-inner svg {
+      width: 210px;
+      height: 210px;
+      filter: drop-shadow(0 0 18px rgba(201, 146, 26, .22))
+    }
+
+    .asv-ring {
+      position: absolute;
+      border: 1px solid rgba(201, 146, 26, .1);
+      border-radius: 50%;
+      animation: rb 4s ease infinite
+    }
+
+    .asv-ring:nth-child(2) {
+      inset: -25px;
+      animation-delay: .6s
+    }
+
+    .asv-ring:nth-child(3) {
+      inset: -50px;
+      animation-delay: 1.2s
+    }
+
+    .asv-tag {
+      position: absolute;
+      font-family: 'Cinzel', serif;
+      font-size: .58rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: #8a6010;
+      padding: .4rem .85rem;
+      border: 1px solid rgba(201, 146, 26, .18);
+      background: #071018
+    }
+
+    .asv-tag.t1 {
+      top: -13px;
+      right: -13px
+    }
+
+    .asv-tag.t2 {
+      bottom: -13px;
+      left: -13px
+    }
+
+    .as-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(201, 146, 26, .18)
+    }
+
+    .ast {
+      background: #071018;
+      padding: 1.3rem;
+      text-align: center;
+      transition: background .3s
+    }
+
+    .ast:hover {
+      background: rgba(26, 58, 92, .35)
+    }
+
+    .ast-n {
+      font-family: 'Cinzel', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #c9921a;
+      display: block;
+      line-height: 1
+    }
+
+    .ast-l {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #7a7a7a;
+      display: block;
+      margin-top: .3rem
+    }
+
+    @keyframes rb {
+
+      0%,
+      100% {
+        opacity: .3;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .7;
+        transform: scale(1.02)
+      }
+    }
+
+    /* PREVIEW GRIDS */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(201, 146, 26, .18);
+      margin-top: 2.5rem
+    }
+
+    .pv-card {
+      background: #071018;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all .35s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden
+    }
+
+    .pv-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      background: linear-gradient(0deg, rgba(26, 58, 92, .5), transparent);
+      transition: height .4s
+    }
+
+    .pv-card:hover {
+      transform: translateY(-5px);
+      background: #0d2137;
+      z-index: 2
+    }
+
+    .pv-card:hover::before {
+      height: 100%
+    }
+
+    .pv-card-ico {
+      font-size: 1.6rem;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(201, 146, 26, .2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s
+    }
+
+    .pv-card:hover .pv-card-ico {
+      border-color: #c9921a;
+      background: rgba(201, 146, 26, .08);
+      transform: rotate(8deg)
+    }
+
+    .pv-card-n {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f0ece2;
+      line-height: 1.25
+    }
+
+    .pv-card-d {
+      font-size: .83rem;
+      color: #7a7a7a;
+      line-height: 1.6
+    }
+
+    .pv-card-f {
+      font-family: 'Cinzel', serif;
+      font-size: .57rem;
+      letter-spacing: .22em;
+      color: #8a6010;
+      margin-top: auto;
+      text-transform: uppercase
+    }
+
+    .pv-card-lnk {
+      font-family: 'Cinzel', serif;
+      font-size: .58rem;
+      letter-spacing: .18em;
+      color: #8a6010;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: all .3s
+    }
+
+    .pv-card-lnk::after {
+      content: '→';
+      transition: transform .3s
+    }
+
+    .pv-card:hover .pv-card-lnk {
+      color: #c9921a
+    }
+
+    .pv-card:hover .pv-card-lnk::after {
+      transform: translateX(4px)
+    }
+
+    /* EVENTS STRIP */
+    .events-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(201, 146, 26, .18)
+    }
+
+    .ev-row {
+      background: #071018;
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 1.8rem 2.5rem;
+      transition: all .3s;
+      cursor: pointer
+    }
+
+    .ev-row:hover {
+      background: #0d2137;
+      padding-left: 3rem
+    }
+
+    .ev-day {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #c9921a;
+      line-height: 1
+    }
+
+    .ev-mon {
+      font-family: 'Cinzel', serif;
+      font-size: .6rem;
+      letter-spacing: .28em;
+      color: #7a7a7a;
+      text-transform: uppercase
+    }
+
+    .ev-cat {
+      font-family: 'Cinzel', serif;
+      font-size: .58rem;
+      letter-spacing: .38em;
+      color: #c9921a;
+      text-transform: uppercase
+    }
+
+    .ev-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #f0ece2
+    }
+
+    .ev-time {
+      font-size: .8rem;
+      color: #7a7a7a
+    }
+
+    .ev-arr {
+      color: #8a6010;
+      font-size: 1.4rem;
+      transition: all .3s
+    }
+
+    .ev-row:hover .ev-arr {
+      transform: translateX(7px);
+      color: #c9921a
+    }
+
+    /* OFFERS PREVIEW */
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(201, 146, 26, .18);
+      margin-top: 2.5rem
+    }
+
+    .of-card {
+      background: #071018;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+      position: relative;
+      overflow: hidden;
+      transition: all .3s;
+      cursor: pointer
+    }
+
+    .of-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c9921a, transparent);
+      transform: scaleX(0);
+      transition: transform .4s
+    }
+
+    .of-card:hover {
+      transform: translateY(-5px);
+      background: rgba(26, 58, 92, .3)
+    }
+
+    .of-card:hover::before {
+      transform: scaleX(1)
+    }
+
+    .of-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #c9921a;
+      line-height: 1
+    }
+
+    .of-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: #f0ece2;
+      font-weight: 500
+    }
+
+    .of-store {
+      font-size: .78rem;
+      color: #8a6010;
+      letter-spacing: .1em
+    }
+
+    .of-desc {
+      font-size: .84rem;
+      color: #7a7a7a;
+      line-height: 1.6
+    }
+
+    .of-valid {
+      font-family: 'Cinzel', serif;
+      font-size: .58rem;
+      letter-spacing: .22em;
+      color: #8a6010;
+      padding: .3rem .65rem;
+      border: 1px solid rgba(201, 146, 26, .2);
+      width: fit-content;
+      margin-top: auto;
+      text-transform: uppercase
+    }
+
+    /* SERVICES */
+    .svc-row {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 1px;
+      background: rgba(201, 146, 26, .18);
+      margin-top: 2.5rem
+    }
+
+    .svc {
+      background: #071018;
+      padding: 1.6rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .65rem;
+      text-align: center;
+      transition: background .3s;
+      cursor: pointer
+    }
+
+    .svc:hover {
+      background: #0d2137
+    }
+
+    .svc-ico {
+      font-size: 1.7rem
+    }
+
+    .svc-n {
+      font-family: 'Cinzel', serif;
+      font-size: .58rem;
+      letter-spacing: .12em;
+      color: #7a7a7a;
+      line-height: 1.3
+    }
+
+    /* VISIT */
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: center
+    }
+
+    .vi-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem
+    }
+
+    .vi-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem
+    }
+
+    .vid {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: .88rem;
+      line-height: 1.72;
+      color: #d4cfc3
+    }
+
+    .vid-ico {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px
+    }
+
+    .vid strong {
+      color: #c9921a;
+      display: block;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: .2rem
+    }
+
+    .vi-map {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem
+    }
+
+    .map-box {
+      border: 1px solid rgba(201, 146, 26, .22);
+      background: linear-gradient(135deg, #071018, #0d2137);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .map-pin-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      z-index: 2;
+      position: relative
+    }
+
+    .map-pin {
+      font-size: 2.5rem;
+      animation: pinB 2s ease infinite
+    }
+
+    .map-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: .78rem;
+      letter-spacing: .22em;
+      color: #c9921a
+    }
+
+    .map-ripple {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .mr {
+      position: absolute;
+      border: 1px solid rgba(201, 146, 26, .15);
+      border-radius: 50%;
+      animation: ripple 3s ease infinite
+    }
+
+    .mr1 {
+      width: 100px;
+      height: 100px
+    }
+
+    .mr2 {
+      width: 175px;
+      height: 175px;
+      animation-delay: .9s
+    }
+
+    .mr3 {
+      width: 260px;
+      height: 260px;
+      animation-delay: 1.8s
+    }
+
+    @keyframes pinB {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-10px)
+      }
+    }
+
+    @keyframes ripple {
+      0% {
+        opacity: .6;
+        transform: scale(.8)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.4)
+      }
+    }
+
+    /* NEWSLETTER */
+    .nl-section {
+      padding: 7rem 0;
+      background: linear-gradient(135deg, #071018, #0d2137, #071018);
+      border-top: 1px solid rgba(201, 146, 26, .18);
+      border-bottom: 1px solid rgba(201, 146, 26, .18)
+    }
+
+    .nl-box {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+      max-width: 580px;
+      margin: 0 auto
+    }
+
+    .nl-star {
+      font-size: 1.8rem;
+      color: #c9921a
+    }
+
+    .nl-h {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: #f0ece2
+    }
+
+    .nl-h em {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: #e8b84b
+    }
+
+    .nl-p {
+      font-size: .93rem;
+      color: #7a7a7a;
+      line-height: 1.72
+    }
+
+    .nl-form {
+      display: flex;
+      width: 100%;
+      max-width: 460px
+    }
+
+    .nl-input {
+      flex: 1;
+      background: rgba(13, 27, 42, .85);
+      border: 1px solid rgba(201, 146, 26, .22);
+      border-right: none;
+      color: #f0ece2;
+      padding: .85rem 1.1rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: .88rem;
+      outline: none;
+      transition: border-color .3s
+    }
+
+    .nl-input:focus {
+      border-color: #c9921a
+    }
+
+    .nl-input::placeholder {
+      color: #7a7a7a
+    }
+
+    .nl-note {
+      font-size: .7rem;
+      color: #7a7a7a;
+      letter-spacing: .1em
+    }
+
+    /* SPLASH BANNER */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background: var(--navy-deep);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+      perspective: 1200px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 1024px) {
+      #splash-screen { height: 85vh; }
+    }
+    @media (max-width: 768px) {
+      #splash-screen { height: 75vh; }
+    }
+    @media (max-width: 480px) {
+      #splash-screen { height: 65vh; }
+    }
+
+    #splash-screen.hidden {
+      transform: translateY(-100%);
+      pointer-events: none
+    }
+
+    .splash-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      filter: blur(25px) brightness(0.6);
+      transform: scale(1.08);
+      transition: opacity 2s ease, transform 12s cubic-bezier(0.16, 1, 0.3, 1), filter 8s ease-out;
+    }
+
+    #splash-screen:not(.hidden) .splash-bg {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px) brightness(0.90);
+    }
+
+    .splash-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(7, 16, 24, 0.4) 100%);
+      z-index: 1;
+    }
+
+    .splash-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+      transition: opacity 0.5s;
+    }
+
+    #splash-screen.hidden .splash-content {
+      opacity: 0;
+    }
+
+    .splash-text {
+      font-family: 'Korataki', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+      color: var(--white);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, .8);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: splashFadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 1.5s;
+      max-width: 600px;
+      line-height: 1.4;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    @keyframes splashFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .splash-top-logo {
+      position: absolute;
+      top: 3rem;
+      right: 3.5rem;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: splashFadeIn 1.5s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    @media (max-width: 768px) {
+      .splash-top-logo {
+        top: 1.5rem;
+        right: 1.5rem;
+        transform: scale(0.85);
+      }
+    }
+
+    .st-main {
+      font-family: 'Korataki', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      color: var(--white);
+    }
+
+    .st-sub {
+      font-family: 'Korataki', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+    }
+
+    .splash-bot-motif {
+      position: absolute;
+      bottom: 3rem;
+      left: 3.5rem;
+      z-index: 10;
+      opacity: 0;
+      animation: splashFadeIn 1.5s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    @media (max-width: 768px) {
+      .splash-bot-motif {
+        bottom: 1.5rem;
+        left: 1.5rem;
+        transform: scale(0.85);
+      }
+    }
+
+    .splash-bot-motif svg {
+      width: 120px;
+      height: 120px;
+      filter: drop-shadow(0 0 20px rgba(201, 146, 26, 0.4));
+    }
+
+    .splash-pos-top {
+      justify-content: flex-start;
+      padding-top: 10vh
+    }
+
+    .splash-pos-center {
+      justify-content: center
+    }
+
+    .splash-pos-bottom {
+      justify-content: flex-end;
+      padding-bottom: 10vh
+    }
+
+    #splashBtn {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 1.2s;
+      padding: 1rem 3rem;
+      font-size: .8rem;
+      box-shadow: 0 0 20px rgba(201, 146, 26, .3);
+      cursor: pointer;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* EXPLORE THE MALL & BRANDS */
+    .level-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(201, 146, 26, .18);
+      margin-top: 2.5rem
+    }
+
+    .level-card {
+      background: #071018;
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      transition: all .4s
+    }
+
+    .level-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: .3;
+      transition: transform .6s, opacity .4s
+    }
+
+    .level-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(7, 16, 24, .9) 0%, rgba(7, 16, 24, 0) 60%)
+    }
+
+    .level-card:hover .level-bg {
+      transform: scale(1.08);
+      opacity: .5
+    }
+
+    .level-card-n {
+      position: relative;
+      z-index: 2;
+      font-family: 'Glory', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: .5rem
+    }
+
+    .level-card-d {
+      position: relative;
+      z-index: 2;
+      font-size: .9rem;
+      color: var(--white);
+      opacity: .8;
+      line-height: 1.5
+    }
+
+    .brands-masonry {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: rgba(201, 146, 26, .18);
+      margin-top: 2.5rem
+    }
+
+    .brand-m-card {
+      background: #071018;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: all .3s
+    }
+
+    .brand-m-card:hover {
+      background: rgba(26, 58, 92, .4)
+    }
+
+    .brand-m-img {
+      max-width: 80%;
+      max-height: 60%;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      filter: grayscale(1) brightness(1.2);
+      transition: filter .3s
+    }
+
+    .brand-m-card:hover .brand-m-img {
+      filter: grayscale(0) brightness(1)
+    }
+
+    .brand-m-n {
+      font-family: 'Glory', sans-serif;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      color: var(--gold-dim);
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center
+    }
+
+    /* RESPONSIVE HOME */
+    @media(max-width:900px) {
+      .about-strip {
+        grid-template-columns: 1fr;
+        gap: 3rem
+      }
+
+      .preview-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .level-grid {
+        grid-template-columns: 1fr
+      }
+
+      .brands-masonry {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .offers-grid {
+        grid-template-columns: 1fr
+      }
+
+      .svc-row {
+        grid-template-columns: repeat(4, 1fr)
+      }
+
+      .visit-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem
+      }
+
+      .h-stats {
+        display: none
+      }
+
+      .h-btns {
+        flex-direction: column;
+        align-items: center
+      }
+
+      .ev-row {
+        grid-template-columns: 80px 1fr auto;
+        gap: 1.5rem;
+        padding: 1.4rem 1.5rem
+      }
+    }
+
+    @media(max-width:600px) {
+      .preview-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* REVIEWS SECTION */
+    .review-carousel {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      perspective: 1200px;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .rev-track {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      transform-style: preserve-3d;
+    }
+
+    .rev-card {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 320px;
+      height: 100%;
+      margin-left: -160px;
+      background: white;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s, z-index 0s;
+      cursor: pointer;
+      text-align: left;
+      background-clip: padding-box;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .rev-card::before {
+      content: '”';
+      font-family: 'Georgia', serif;
+      font-size: 5rem;
+      color: #e8e8e8;
+      line-height: 0;
+      display: block;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .rev-text {
+      font-family: 'Glory', sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.6;
+      flex: 1;
+      text-align: center;
+    }
+
+    .rev-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .rev-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Glory', sans-serif;
+      font-weight: 800;
+      color: #333;
+    }
+
+    .rev-name {
+      font-family: 'Glory', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: #000;
+      text-transform: uppercase;
+    }
+
+    /* 3D STATES */
+    .rev-card {
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .rev-card.active {
+      transform: translateX(0) translateZ(0) rotateY(0);
+      z-index: 3;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .rev-card.prev {
+      transform: translateX(-55%) translateZ(-150px) rotateY(35deg);
+      z-index: 2;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .rev-card.next {
+      transform: translateX(55%) translateZ(-150px) rotateY(-35deg);
+      z-index: 2;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .rev-card.hidden-left {
+      transform: translateX(-100%) translateZ(-300px) rotateY(45deg);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rev-card.hidden-right {
+      transform: translateX(100%) translateZ(-300px) rotateY(-45deg);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rev-card:not(.active)::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2));
+      pointer-events: none;
+    }
+
+    .rev-card.prev::after {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.15));
+    }
+
+    .rev-card.next::after {
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.15));
+    }
+
+    /* CONTROLS */
+    .rev-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .rev-btn {
+      background: var(--navy-deep);
+      color: var(--gold);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      opacity: 0.5;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .rev-btn:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .rev-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .rev-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.3s;
+      margin: 0;
+      padding: 0;
+    }
+
+    .rev-dot.active {
+      background: var(--navy-deep);
+      border-color: var(--navy-deep);
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 600px) {
+      .review-carousel {
+        min-height: 400px;
+      }
+
+      .rev-track {
+        height: 300px;
+      }
+
+      .rev-card {
+        width: 260px;
+        margin-left: -130px;
+        padding: 1.5rem 1rem;
+      }
+
+      .rev-card::before {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .rev-text {
+        font-size: 0.85rem;
+      }
+
+      .rev-avatar {
+        width: 36px;
+        height: 36px;
+      }
+
+      .rev-name {
+        font-size: 0.75rem;
+      }
+    }
+    /* FACILITIES GALLERY */
+  .fac-gallery-wrap { position: relative; width: 100%; overflow: hidden; padding: 2rem 0; }
+  .fac-gallery { 
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+    will-change: transform;
+  }
+  .fac-card {
+    flex: 0 0 calc(33.333% - 1rem);
+    position: relative;
+    aspect-ratio: 9/14;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--navy-deep);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+  .fac-card:hover { 
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  .fac-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.8s ease;
+    filter: brightness(0.6);
+  }
+  .fac-card:hover .fac-bg { transform: scale(1.1); filter: brightness(0.8); }
+  .fac-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, rgba(7,16,24,0.9));
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2.5rem 2rem;
+  }
+  .fac-tag {
+    font-family: 'Cinzel', serif; font-size: 0.65rem;
+    letter-spacing: 0.3em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 0.5rem;
+    opacity: 0.8; transition: all 0.4s ease;
+  }
+  .fac-name {
+    font-family: 'Korataki', sans-serif; font-size: 1.5rem;
+    color: #fff; margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+    opacity: 1; transition: all 0.4s ease;
+  }
+  .fac-btn {
+    align-self: flex-start;
+    padding: 0.8rem 1.6rem;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Cinzel', serif; font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+    opacity: 0; transform: translateY(10px);
+  }
+  .fac-card:hover .fac-btn { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+  .fac-btn:hover { background: var(--gold); color: var(--navy-deep); }
+
+  /* CAROUSEL ARROWS */
+  .fac-nav {
+    display: flex; justify-content: center; gap: 2rem; margin-top: 3rem;
+  }
+  .fac-arrow {
+    width: 50px; height: 50px; border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); cursor: pointer; transition: all 0.3s; font-size: 1.2rem;
+  }
+  .fac-arrow:hover { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+  .fac-arrow.disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* DETAIL MODAL */
+  .fac-detail-modal {
+    position: fixed; inset: 0;
+    background: rgba(7,16,24,0.98);
+    backdrop-filter: blur(15px);
+    z-index: 10000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: all 0.4s;
+    padding: 2rem;
+  }
+  .fac-detail-modal.active { opacity: 1; visibility: visible; }
+  .fac-detail-content {
+    background: var(--navy-deep);
+    border: 1px solid var(--gold-faint);
+    max-width: 1000px; width: 100%;
+    display: grid; grid-template-columns: 45% 55%;
+    max-height: 85vh; overflow: hidden;
+    transform: scale(0.95); transition: transform 0.4s;
+  }
+  .fac-detail-modal.active .fac-detail-content { transform: scale(1); }
+  .fac-detail-img { background-size: cover; background-position: center; }
+  .fac-detail-info {
+    padding: 3.5rem; overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .fac-detail-header { border-bottom: 1px solid var(--gold-faint); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .fac-detail-tag { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .fac-detail-name { font-family: 'Korataki', sans-serif; font-size: 2.2rem; color: #fff; letter-spacing: 0.1em; }
+  .fac-detail-text { font-size: 1.05rem; line-height: 1.8; color: rgba(240,236,226,0.8); white-space: pre-line; }
+  .fac-close-btn {
+    position: absolute; top: 1.5rem; right: 2rem;
+    font-size: 2rem; color: #fff; cursor: pointer; transition: color 0.3s;
+  }
+  .fac-close-btn:hover { color: var(--gold); }
+
+  @media(max-width:768px) {
+    .fac-gallery { grid-template-columns: 1fr; }
+    .fac-detail-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+    .fac-detail-img { height: 300px; }
+    .fac-detail-info { padding: 2rem; }
+    .fac-detail-name { font-size: 1.6rem; }
+  }
+</style>
+</head>
+
+<body>
+  <div id="splash-screen" class="hidden">
+    <div class="splash-bg" id="splashBg"></div>
+    <div class="splash-overlay"></div>
+    <div class="splash-top-logo">
+
+    </div>
+    <div class="splash-bot-motif" id="splashMotif"></div>
+    <div class="splash-content" id="splashContent">
+      <div class="splash-text" id="splashTextEl"></div>
+      <button class="btn-g" id="splashBtn" onclick="closeSplash()">Visit Website</button>
+    </div>
+  </div>
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
+  <div id="loader"></div>
+  <nav id="nav"></nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="h-bg"></div>
+    <canvas id="particles"></canvas>
+    <div class="h-vignette"></div>
+    <div class="h-content">
+      <div class="h-eyebrow"><span class="h-eye-line"></span>Karachi, Pakistan<span class="h-eye-line"></span></div>
+      <div class="h-motif">
+        <div id="heroLogoContainer">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#e8b84b;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#c9921a;stop-opacity:1" />
+              </linearGradient>
+              <filter id="gw" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <circle cx="150" cy="150" r="138" fill="rgba(13,27,42,.8)" stroke="url(#mg)" stroke-width="3"
+              filter="url(#gw)" />
+            <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(201,146,26,.2)" stroke-width="1" />
+            <g transform="translate(150,150)" fill="none" stroke="url(#mg)" stroke-width="4.5" stroke-linecap="round">
+              <path d="M0,-68C-20,-68-38,-53-38,-33C-38,-13-20,2 0,12C20,2 38,-13 38,-33C38,-53 20,-68 0,-68Z"
+                opacity=".85" />
+              <path d="M0,68C-20,68-38,53-38,33C-38,13-20,-2 0,-12C20,-2 38,13 38,33C38,53 20,68 0,68Z" opacity=".85" />
+              <path d="M-68,0C-68,-20-53,-38-33,-38C-13,-38 2,-20 12,0C2,20-13,38-33,38C-53,38-68,20-68,0Z"
+                opacity=".85" />
+              <path d="M68,0C68,-20 53,-38 33,-38C13,-38-2,-20-12,0C-2,20 13,38 33,38C53,38 68,20 68,0Z"
+                opacity=".85" />
+              <rect x="-11" y="-11" width="22" height="22" transform="rotate(45)" stroke-width="3.5" opacity=".75" />
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="h-title"><span class="the">THE</span><span class="blue">BLUE</span></div>
+      <div class="h-divider"><span class="h-div-orn">❧</span><span class="h-div-txt">KARACHI</span><span
+          class="h-div-orn">❧</span></div>
+      <p class="h-tagline">Where Karachi's Spirit Meets World-Class Luxury</p>
+      <div class="h-btns">
+        <a href="shops.html" class="btn-g">Explore Stores</a>
+        <a href="events.html" class="btn-ghost">Upcoming Events</a>
+      </div>
+    </div>
+    <div class="h-stats">
+      <div class="hst"><span class="hst-n">200+</span><span class="hst-l">Premium Stores</span></div>
+      <div class="hst-d"></div>
+      <div class="hst"><span class="hst-n">50+</span><span class="hst-l">Restaurants</span></div>
+      <div class="hst-d"></div>
+      <div class="hst"><span class="hst-n">7</span><span class="hst-l">Floors</span></div>
+      <div class="hst-d"></div>
+      <div class="hst"><span class="hst-n">3000+</span><span class="hst-l">Parking Spots</span></div>
+    </div>
+    <div class="h-scroll"><span>Scroll</span>
+      <div class="h-scroll-line"></div>
+    </div>
+  </section>
+
+  <div id="ticker"></div>
+
+  <!-- ABOUT PREVIEW -->
+  <section class="sec-home" style="padding-top:7rem">
+    <div class="container">
+      <div class="about-strip">
+        <div class="as-left" data-r="l">
+          <div class="section-lbl">Our Story</div>
+          <h2 class="section-h">Karachi's<br><em>Grandest Stage</em></h2>
+          <div class="gold-rule"></div>
+          <p class="as-body">Rising magnificently from the heart of Karachi, The Blue is more than a shopping centre —
+            it is a cultural landmark. Where architectural grandeur, curated luxury retail, world-class dining, and
+            immersive entertainment converge to create an experience unlike any other in Pakistan.</p>
+          <div class="as-pillars">
+            <div class="pillar"><span class="pillar-ico">◈</span>
+              <div><strong>Luxury Retail</strong><span>200+ curated stores</span></div>
+            </div>
+            <div class="pillar"><span class="pillar-ico">◈</span>
+              <div><strong>Fine Dining</strong><span>50+ restaurants & cafés</span></div>
+            </div>
+            <div class="pillar"><span class="pillar-ico">◈</span>
+              <div><strong>Entertainment</strong><span>Cinemas, arcades & more</span></div>
+            </div>
+          </div>
+          <a href="about.html" class="btn-g" style="margin-top:.5rem;width:fit-content">Read Our Story</a>
+        </div>
+        <div class="as-right" data-r="r">
+          <div class="as-visual">
+            <div class="asv-inner">
+              <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="avGrad">
+                    <stop offset="0%" stop-color="#1a3a5c" />
+                    <stop offset="100%" stop-color="#0d1b2a" />
+                  </radialGradient>
+                </defs>
+                <circle cx="140" cy="140" r="138" fill="url(#avGrad)" />
+                <circle cx="140" cy="140" r="128" fill="none" stroke="#c9921a" stroke-width="1.5" opacity=".55" />
+                <circle cx="140" cy="140" r="90" fill="none" stroke="rgba(201,146,26,.18)" stroke-width="1" />
+                <circle cx="140" cy="140" r="50" fill="none" stroke="rgba(201,146,26,.12)" stroke-width="1" />
+                <line x1="140" y1="12" x2="140" y2="268" stroke="rgba(201,146,26,.09)" stroke-width="1" />
+                <line x1="12" y1="140" x2="268" y2="140" stroke="rgba(201,146,26,.09)" stroke-width="1" />
+                <text x="140" y="132" text-anchor="middle" font-family="Cinzel,serif" font-size="24" fill="#c9921a"
+                  letter-spacing="3" font-weight="600">THE</text>
+                <text x="140" y="165" text-anchor="middle" font-family="Cinzel,serif" font-size="30" fill="#e8b84b"
+                  letter-spacing="2" font-weight="700">BLUE</text>
+                <text x="140" y="191" text-anchor="middle" font-family="Cinzel,serif" font-size="10"
+                  fill="rgba(201,146,26,.65)" letter-spacing="7">KARACHI</text>
+              </svg>
+              <div class="asv-ring"></div>
+              <div class="asv-ring"></div>
+              <div class="asv-ring"></div>
+            </div>
+            <div class="asv-tag t1">Est. 2024 · Karachi</div>
+            <div class="asv-tag t2">Ground — Level 7</div>
+          </div>
+          <div class="as-stats">
+            <div class="ast"><span class="ast-n" data-count="200" data-sfx="+">200+</span><span
+                class="ast-l">Stores</span></div>
+            <div class="ast"><span class="ast-n" data-count="50" data-sfx="+">50+</span><span
+                class="ast-l">Restaurants</span></div>
+            <div class="ast"><span class="ast-n" data-count="7" data-sfx="">7</span><span class="ast-l">Floors</span>
+            </div>
+            <div class="ast"><span class="ast-n" data-count="3000" data-sfx="+">3000+</span><span
+                class="ast-l">Parking</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORE THE MALL -->
+  <section class="sec-home pattern" id="explore-mall">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem" data-r>
+        <div>
+          <div class="section-lbl">Floor Levels</div>
+          <h2 class="section-h">Explore<br><em>The Mall</em></h2>
+        </div>
+      </div>
+      <div class="level-grid" id="levelsPreview"></div>
+    </div>
+  </section>
+
+  <!-- LATEST BRANDS -->
+  <section class="sec-home dark" id="latest-brands">
+    <div class="container" style="text-align:center">
+      <div data-r>
+        <div class="section-lbl" style="justify-content:center">New Arrivals</div>
+        <h2 class="section-h">Discover<br><em>Latest Brands</em></h2>
+        <div class="gold-rule" style="margin:1.3rem auto"></div>
+      </div>
+      <div class="brands-masonry" id="brandsPreview" data-r></div>
+    </div>
+  </section>
+
+  <!-- SHOP CATEGORIES -->
+  <section class="sec-home pattern" id="shops-prev">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem" data-r>
+        <div>
+          <div class="section-lbl">Shop By Category</div>
+          <h2 class="section-h">Every World<br><em>Under One Roof</em></h2>
+        </div>
+        <a href="shops.html" class="btn-ghost">View All Stores →</a>
+      </div>
+      <div class="preview-grid" id="catsPreview"></div>
+    </div>
+  </section>
+
+  <!-- DINING -->
+  <section class="sec-home dark">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem" data-r>
+        <div>
+          <div class="section-lbl">Dining & Cuisine</div>
+          <h2 class="section-h">A Feast for<br><em>Every Taste</em></h2>
+        </div>
+        <a href="dining.html" class="btn-ghost">Explore Dining →</a>
+      </div>
+      <div class="preview-grid" id="diningPreview" style="grid-template-columns:repeat(3,1fr)"></div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="sec-home pattern">
+    <div class="container">
+      <div
+        style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:2rem"
+        data-r>
+        <div>
+          <div class="section-lbl">What's On</div>
+          <h2 class="section-h">Upcoming <em>Events</em></h2>
+        </div>
+        <a href="events.html" class="btn-ghost">Full Calendar →</a>
+      </div>
+      <div class="events-strip" id="eventsPreview"></div>
+    </div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="sec-home dark">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem" data-r>
+        <div>
+          <div class="section-lbl">Exclusive Offers</div>
+          <h2 class="section-h">This Month's<br><em>Best Deals</em></h2>
+        </div>
+        <a href="offers.html" class="btn-ghost">All Offers →</a>
+      </div>
+      <div class="offers-grid" id="offersPreview"></div>
+    </div>
+  </section>
+
+  <!-- GALLERY FACILITIES -->
+  <section class="sec-home pattern" id="facilities">
+    <div class="container">
+      <div data-r style="text-align:center;margin-bottom:1rem">
+        <div class="section-lbl" style="justify-content:center"><span style="display:none"></span>Premium Facilities Gallery
+        </div>
+        <h2 class="section-h" style="text-align:center">World-Class<br><em>Experiences</em></h2>
+      </div>
+      <div class="fac-gallery-wrap">
+        <div class="fac-gallery" id="facilitiesGallery">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+      <div class="fac-nav">
+        <div class="fac-arrow" id="facPrev" onclick="moveFac(-1)">←</div>
+        <div class="fac-arrow" id="facNext" onclick="moveFac(1)">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACILITY DETAIL MODAL -->
+  <div class="fac-detail-modal" id="facDetailModal">
+    <div class="fac-close-btn" onclick="closeFacDetail()">✕</div>
+    <div class="fac-detail-content">
+      <div class="fac-detail-img" id="facDetailImg"></div>
+      <div class="fac-detail-info">
+        <div class="fac-detail-header">
+          <div class="fac-detail-tag" id="facDetailTag">TAGLINE</div>
+          <div class="fac-detail-name" id="facDetailName">FACILITY NAME</div>
+        </div>
+        <div class="fac-detail-text" id="facDetailText">
+          Loading content...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <section class="sec-home" style="background:var(--off-white)">
+    <div class="container" style="text-align:center;overflow:hidden">
+      <div class="section-lbl" style="justify-content:center"><span style="display:none"></span>Your Reviews</div>
+      <h2 class="section-h" style="color:var(--navy-deep);margin-bottom:3rem">People Love Us</h2>
+
+      <div class="review-carousel" id="revCarousel">
+        <div class="rev-track" id="revTrack"></div>
+        <div class="rev-nav">
+          <button class="rev-btn" id="revPrev">&lt;</button>
+          <button class="rev-btn" id="revNext">&gt;</button>
+        </div>
+        <div class="rev-dots" id="revDots"></div>
+      </div>
+
+      <button class="btn-ghost" style="margin-top:2.5rem" onclick="openReviewModal()">Give Feedback</button>
+    </div>
+  </section>
+
+  <!-- REVIEW SUBMISSION MODAL -->
+  <div id="reviewModal"
+    style="position:fixed;inset:0;background:rgba(7,16,24,0.9);z-index:100000;display:none;align-items:center;justify-content:center;padding:2rem;cursor:none">
+    <div
+      style="background:var(--navy-deep);border:1px solid var(--gold);width:100%;max-width:500px;padding:2.5rem;position:relative;cursor:none">
+      <button onclick="closeReviewModal()"
+        style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:none">✕</button>
+      <div class="section-lbl" style="margin-bottom:1rem">Share Your Experience</div>
+      <h2 class="section-h" style="margin-bottom:2rem;font-size:1.8rem">Write a Review</h2>
+      <div style="display:flex;flex-direction:column;gap:1.5rem">
+        <input type="text" id="revInputName" placeholder="Your Name"
+          style="background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:1rem;color:white;font-family:'Glory',sans-serif;cursor:none">
+        <textarea id="revInputText" placeholder="What did you love about The Blue?" rows="5"
+          style="background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:1rem;color:white;font-family:'Glory',sans-serif;resize:none;cursor:none"></textarea>
+        <button onclick="submitUserReview()" class="btn-g" id="revSubmitBtn" style="cursor:none">Submit Review</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISIT -->
+  <section class="sec-home dark">
+    <div class="container">
+      <div class="visit-grid">
+        <div class="vi-left" data-r="l">
+          <div class="section-lbl">Find Us</div>
+          <h2 class="section-h">Plan Your <em>Visit</em></h2>
+          <div class="gold-rule"></div>
+          <div class="vi-details">
+            <div class="vid"><span class="vid-ico">📍</span>
+              <div><strong>Address</strong>Clifton, Karachi, Sindh, Pakistan</div>
+            </div>
+            <div class="vid"><span class="vid-ico">🕐</span>
+              <div><strong>Opening Hours</strong>Mon–Thu & Sun: 10:00 AM – 11:00 PM<br>Fri–Sat: 10:00 AM – 12:00 AM
+              </div>
+            </div>
+            <div class="vid"><span class="vid-ico">📞</span>
+              <div><strong>Contact</strong>+92 21 0000 0000<br>info@thebluekarachi.com</div>
+            </div>
+          </div>
+          <a href="contact.html" class="btn-g" style="width:fit-content">Get Directions</a>
+        </div>
+        <div class="vi-map" data-r="r">
+          <div class="map-box">
+            <div class="map-ripple">
+              <div class="mr mr1"></div>
+              <div class="mr mr2"></div>
+              <div class="mr mr3"></div>
+            </div>
+            <div class="map-pin-wrap">
+              <div class="map-pin">📍</div>
+              <div class="map-lbl">The Blue Karachi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="nl-section">
+    <div class="container">
+      <div class="nl-box" data-r>
+        <div class="nl-star">✦</div>
+        <h2 class="nl-h">Stay in the <em>Loop</em></h2>
+        <p class="nl-p">Be first to know about new openings, exclusive offers, and upcoming events at The Blue Karachi.
+        </p>
+        <form class="nl-form" id="nlForm">
+          <input type="email" class="nl-input" placeholder="Your email address" required>
+          <button type="submit" class="btn-g">Subscribe</button>
+        </form>
+        <div class="nl-note">No spam, ever. Unsubscribe any time.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+  <script src="shared.js"></script>
+  <script>
+    initAll('index.html');
+
+    // Render categories preview (4)
+    const cats = CMS.get('categories').slice(0, 4);
+    document.getElementById('catsPreview').innerHTML = cats.map(c => `
+  <a href="shops.html" class="pv-card" data-r>
+    ${c.image ? `<div style="position:absolute;inset:0;background:url('${c.image}') center/cover;opacity:0.2;z-index:0"></div>` : ''}
+    <div class="pv-card-ico" style="position:relative;z-index:1">${c.icon}</div>
+    <div class="pv-card-n" style="position:relative;z-index:1">${c.name}</div>
+    <div class="pv-card-d" style="position:relative;z-index:1">${c.desc}</div>
+    <div class="pv-card-f" style="position:relative;z-index:1">${c.floor}</div>
+    <div class="pv-card-lnk" style="position:relative;z-index:1">Browse</div>
+  </a>`).join('');
+
+    // Render levels
+    const levels = CMS.get('levels').slice(0, 3);
+    document.getElementById('levelsPreview').innerHTML = levels.map(l => `
+  <a href="shops.html?floor=${encodeURIComponent(l.name)}" class="level-card" data-r>
+    <div class="level-bg" style="background-image:url('${l.image || ''}')"></div>
+    <div class="level-card-n">${l.name}</div>
+    <div class="level-card-d">${l.desc}</div>
+  </a>`).join('');
+
+    // Render Latest Brands
+    const latestBrands = CMS.get('latestBrands');
+    if (latestBrands.length) {
+      document.getElementById('brandsPreview').innerHTML = latestBrands.map(b => `
+    <div class="brand-m-card">
+      <img src="${b.image}" class="brand-m-img" alt="${b.name}">
+      <div class="brand-m-n">${b.name}</div>
+    </div>`).join('');
+    } else {
+      document.getElementById('latest-brands').style.display = 'none';
+    }
+
+    // Render dining preview (3)
+    const dining = CMS.get('dining').slice(0, 3);
+    document.getElementById('diningPreview').innerHTML = dining.map(d => `
+  <a href="dining.html" class="pv-card" data-r>
+    <div class="pv-card-ico">${d.icon}</div>
+    <div class="pv-card-n">${d.name}</div>
+    <div style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.3em;color:#c9921a;text-transform:uppercase">${d.tag}</div>
+    <div class="pv-card-d">${d.desc}</div>
+    <div class="pv-card-f">${d.floor}</div>
+  </a>`).join('');
+
+    // Render events preview (3)
+    const events = CMS.get('events').slice(0, 3);
+    document.getElementById('eventsPreview').innerHTML = events.map(e => {
+      const bgImage = (e.images && e.images.length > 0) ? e.images[0] : (e.image || '');
+      return `
+  <a href="events.html" class="ev-row" data-r style="position:relative;overflow:hidden">
+    ${bgImage ? `<div style="position:absolute;inset:0;background:url('${bgImage}') center/cover;opacity:0.1;z-index:0;transition:opacity .3s" class="ev-bg"></div>` : ''}
+    <div style="position:relative;z-index:1"><div class="ev-day">${e.day}</div><div class="ev-mon">${e.month} ${e.year}</div></div>
+    <div style="position:relative;z-index:1"><div class="ev-cat">${e.cat || e.category}</div><div class="ev-title">${e.title}</div><div class="ev-time">${e.time}</div></div>
+    <div class="ev-arr" style="position:relative;z-index:1">→</div>
+  </a>`;
+    }).join('');
+
+    // Hover effect for event rows
+    document.querySelectorAll('.ev-row').forEach(row => {
+      row.addEventListener('mouseenter', () => { const bg = row.querySelector('.ev-bg'); if (bg) bg.style.opacity = '0.3'; });
+      row.addEventListener('mouseleave', () => { const bg = row.querySelector('.ev-bg'); if (bg) bg.style.opacity = '0.1'; });
+    });
+
+    // Render offers preview (3)
+    const offers = CMS.get('offers').slice(0, 3);
+    document.getElementById('offersPreview').innerHTML = offers.map(o => `
+  <a href="offers.html" class="of-card" data-r style="position:relative">
+    ${o.image ? `<div style="position:absolute;inset:0;background:url('${o.image}') center/cover;opacity:0.15;z-index:0;transition:opacity .3s" class="of-bg"></div>` : ''}
+    <div class="of-badge" style="position:relative;z-index:1">${o.badge}</div>
+    <div class="of-title" style="position:relative;z-index:1">${o.title}</div>
+    <div class="of-store" style="position:relative;z-index:1">${o.store}</div>
+    <div class="of-desc" style="position:relative;z-index:1">${o.desc}</div>
+    <div class="of-valid" style="position:relative;z-index:1">${o.validity}</div>
+  </a>`).join('');
+
+    document.querySelectorAll('.of-card').forEach(row => {
+      row.addEventListener('mouseenter', () => { const bg = row.querySelector('.of-bg'); if (bg) bg.style.opacity = '0.4'; });
+      row.addEventListener('mouseleave', () => { const bg = row.querySelector('.of-bg'); if (bg) bg.style.opacity = '0.15'; });
+    });
+
+    // Inject Hero Logo
+    const heroLogoSrc = CMS.get('settings').siteLogo;
+    if (heroLogoSrc) {
+      document.getElementById('heroLogoContainer').innerHTML = `<img src="${heroLogoSrc}" style="width:180px;height:180px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(201,146,26,0.5))">`;
+    }
+
+    // Re-init reveal after dynamic content
+    setTimeout(() => { document.querySelectorAll('[data-r]').forEach(el => { const ob = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis') }), { threshold: .1, rootMargin: '0px 0px -40px 0px' }); ob.observe(el); }); }, 100);
+
+    // Counter animation
+    const cObs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('[data-count]').forEach(el => {
+          if (el.dataset.done) return; el.dataset.done = 1;
+          const t = +el.dataset.count, s = el.dataset.sfx || ''; let c = 0;
+          const ti = setInterval(() => { c = Math.min(c + t / 55, t); el.textContent = Math.floor(c) + s; if (c >= t) clearInterval(ti); }, 22);
+        }); cObs.unobserve(e.target);
+      }
+    }), { threshold: .3 });
+    document.querySelectorAll('.as-stats').forEach(el => cObs.observe(el));
+
+    // Particles
+    (function () {
+      const cv = document.getElementById('particles');
+      if (!cv) return;
+      const cx = cv.getContext('2d');
+      let W = cv.width = cv.offsetWidth, H = cv.height = cv.offsetHeight;
+      const ps = Array.from({ length: 70 }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .3, vy: -Math.random() * .45 - .08, sz: Math.random() * 1.4 + .3, op: Math.random() * .45 + .1 }));
+      function draw() { cx.clearRect(0, 0, W, H); ps.forEach(p => { cx.beginPath(); cx.arc(p.x, p.y, p.sz, 0, Math.PI * 2); cx.fillStyle = `rgba(201,146,26,${p.op})`; cx.fill(); p.x += p.vx; p.y += p.vy; if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W } if (p.x < 0) p.x = W; if (p.x > W) p.x = 0; }); requestAnimationFrame(draw); }
+      draw(); window.addEventListener('resize', () => { W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight; });
+    })();
+
+    // Newsletter
+    document.getElementById('nlForm')?.addEventListener('submit', e => {
+      e.preventDefault(); const b = e.target.querySelector('button');
+      b.textContent = '✓ Subscribed!'; b.style.background = '#40a860'; b.style.color = '#fff';
+      e.target.querySelector('input').value = '';
+      setTimeout(() => { b.textContent = 'Subscribe'; b.style.background = ''; b.style.color = ''; }, 3000);
+    });
+
+    // Splash Screen Logic
+    function checkSplash() {
+      const settings = CMS.get('settings');
+      if (settings.splashEnabled) {
+        const splash = document.getElementById('splash-screen');
+        const content = document.getElementById('splashContent');
+        const textEl = document.getElementById('splashTextEl');
+        const btn = document.getElementById('splashBtn');
+        const motifEl = document.getElementById('splashMotif');
+
+        splash.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        document.getElementById('splashBg').style.backgroundImage = `url('${settings.splashImage || 'banner.jpeg'}')`;
+        if (settings.splashText) textEl.innerHTML = settings.splashText;
+
+        // Add motif if not set
+        if (motifEl) {
+          motifEl.innerHTML = `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="smg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e8b84b;stop-opacity:1" /><stop offset="100%" style="stop-color:#c9921a;stop-opacity:1" /></linearGradient>
+            </defs>
+            <circle cx="150" cy="150" r="138" fill="rgba(13,27,42,.6)" stroke="url(#smg)" stroke-width="2" />
+            <g transform="translate(150,150)" fill="none" stroke="url(#smg)" stroke-width="4" stroke-linecap="round">
+              <path d="M0,-68C-20,-68-38,-53-38,-33C-38,-13-20,2 0,12C20,2 38,-13 38,-33C38,-53 20,-68 0,-68Z" opacity="1" />
+              <path d="M0,68C-20,68-38,53-38,33C-38,13-20,-2 0,-12C20,-2 38,13 38,33C38,53 20,68 0,68Z" opacity="1" />
+              <path d="M-68,0C-68,-20-53,-38-33,-38C-13,-38 2,-20 12,0C2,20-13,38-33,38C-53,38-68,20-68,0Z" opacity="1" />
+              <path d="M68,0C68,-20 53,-38 33,-38C13,-38-2,-20-12,0C-2,20 13,38 33,38C53,38 68,20 68,0Z" opacity="1" />
+            </g>
+          </svg>`;
+        }
+
+        content.className = 'splash-content splash-pos-' + (settings.splashPos || 'center');
+
+        const isComingSoon = settings.splashText && settings.splashText.toLowerCase().includes('coming soon');
+
+        if (!settings.splashBtnEnabled || isComingSoon) {
+          btn.style.display = 'none';
+        } else {
+          btn.style.display = 'inline-flex';
+        }
+
+        // Auto close after 8s (longer for slow transition)
+        if (!isComingSoon) {
+          setTimeout(closeSplash, 8000);
+        }
+      }
+    }
+
+    function closeSplash() {
+      const splash = document.getElementById('splash-screen');
+      splash.classList.add('hidden');
+      document.body.style.overflow = '';
+      setTimeout(() => splash.style.display = 'none', 1200);
+    }
+
+    checkSplash();
+
+    // Reviews Logic
+    let revs = CMS.get('reviews');
+    const tr = document.getElementById('revTrack');
+    const dt = document.getElementById('revDots');
+    let currentRev = 1;
+    let autoRevTimer;
+
+    function renderReviews() {
+      if (!tr || !dt) return;
+      revs = CMS.get('reviews') || [];
+      if (!Array.isArray(revs)) revs = [];
+      tr.innerHTML = revs.length ? revs.map(r => `<div class="rev-card"><div class="rev-text">${r.text}</div><div class="rev-author"><div class="rev-avatar">${(r.name || '?').charAt(0)}</div><div class="rev-name">${r.name || 'Anonymous'}</div></div></div>`).join('') : '<div style="color:var(--grey);padding:2rem">No reviews yet.</div>';
+      dt.innerHTML = revs.map((_, i) => `<div class="rev-dot" onclick="goRev(${i})"></div>`).join('');
+      upRev();
+      startAutoRev();
+    }
+
+    function upRev() {
+      const is = tr.children, ds = dt.children;
+      if (!is.length) return;
+      for (let i = 0; i < is.length; i++) {
+        is[i].className = 'rev-card' + (i === currentRev ? ' active' : (i === currentRev - 1 ? ' prev' : (i === currentRev + 1 ? ' next' : (i < currentRev ? ' hidden-left' : ' hidden-right'))));
+        if (ds[i]) ds[i].className = 'rev-dot' + (i === currentRev ? ' active' : '');
+      }
+    }
+
+    // Auto-scroll logic — moves every 3 seconds
+    function startAutoRev() {
+      stopAutoRev();
+      if (!revs || revs.length < 2) return;
+      autoRevTimer = setInterval(() => {
+        goRev(currentRev + 1);
+      }, 3000);
+    }
+    function stopAutoRev() { clearInterval(autoRevTimer); }
+    function resetAutoRev() { stopAutoRev(); startAutoRev(); }
+
+    window.goRev = i => {
+      if (!revs || revs.length === 0) return;
+      currentRev = (i + revs.length) % revs.length;
+      upRev();
+      resetAutoRev();
+    };
+    document.getElementById('revPrev').onclick = () => goRev(currentRev - 1);
+    document.getElementById('revNext').onclick = () => goRev(currentRev + 1);
+
+    // Initial render
+    renderReviews();
+
+    // Modal Logic
+    window.openReviewModal = () => document.getElementById('reviewModal').style.display = 'flex';
+    window.closeReviewModal = () => document.getElementById('reviewModal').style.display = 'none';
+    window.submitUserReview = () => {
+      const name = document.getElementById('revInputName').value.trim();
+      const text = document.getElementById('revInputText').value.trim();
+      if (!name || !text) return;
+
+      const current = CMS.get('reviews');
+      current.push({ id: Date.now(), name, text });
+      CMS.set('reviews', current);
+
+      const btn = document.getElementById('revSubmitBtn');
+      btn.textContent = "✓ Submitted!";
+      btn.style.background = "#40a860";
+
+      setTimeout(() => {
+        closeReviewModal();
+        renderReviews();
+        // Reset button
+        btn.textContent = "Submit Review";
+        btn.style.background = "";
+        document.getElementById('revInputName').value = "";
+        document.getElementById('revInputText').value = "";
+      }, 1500);
+    };
+
+    // Drag / Swipe Logic
+    let isDragging = false, startX, scrollLeft, startTime;
+    const carousel = document.getElementById('revCarousel');
+
+    carousel.addEventListener('mousedown', e => {
+      isDragging = true;
+      startX = e.pageX;
+      startTime = Date.now();
+      carousel.style.cursor = 'grabbing';
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+      isDragging = false;
+      carousel.style.cursor = 'default';
+    });
+
+    carousel.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      carousel.style.cursor = 'default';
+      const endX = e.pageX;
+      const diff = endX - startX;
+      const duration = Date.now() - startTime;
+
+      if (Math.abs(diff) > 50 || (Math.abs(diff) > 20 && duration < 200)) {
+        if (diff > 0) goRev(currentRev - 1);
+        else goRev(currentRev + 1);
+      }
+    });
+
+    // Touch support
+    carousel.addEventListener('touchstart', e => {
+      isDragging = true;
+      startX = e.touches[0].pageX;
+      startTime = Date.now();
+    });
+
+    carousel.addEventListener('touchend', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const endX = e.changedTouches[0].pageX;
+      const diff = endX - startX;
+      const duration = Date.now() - startTime;
+
+      if (Math.abs(diff) > 40 || (Math.abs(diff) > 15 && duration < 200)) {
+        if (diff > 0) goRev(currentRev - 1);
+        else goRev(currentRev + 1);
+      }
+    });
+
+  // ---- FACILITIES GALLERY ----
+  let facIndex = 0;
+  let facAutoTimer;
+
+  function renderFacilities() {
+    const facilities = CMS.get('facilities');
+    const container = document.getElementById('facilitiesGallery');
+    if (!container) return;
+    
+    container.innerHTML = facilities.map(f => `
+      <div class="fac-card" data-r onclick="openFacDetail(${f.id})">
+        <div class="fac-bg" style="background-image: url('${f.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800'}')"></div>
+        <div class="fac-overlay">
+          <div class="fac-tag">${f.tag}</div>
+          <div class="fac-name">${f.name}</div>
+          <div class="fac-btn">Explore More</div>
+        </div>
+      </div>
+    `).join('');
+    
+    facIndex = 0;
+    setTimeout(() => {
+      updateFacNav();
+      startFacAuto();
+    }, 100);
+    
+    // Re-init reveal for new items
+    if (typeof initReveal === 'function') initReveal();
+  }
+
+  function startFacAuto() {
+    stopFacAuto();
+    const facilities = CMS.get('facilities');
+    if (!facilities || facilities.length < 2) return;
+    facAutoTimer = setInterval(() => {
+      moveFac(1, true); // true = auto-mode (for looping)
+    }, 1500);
+  }
+
+  function stopFacAuto() { clearInterval(facAutoTimer); }
+  function resetFacAuto() { stopFacAuto(); startFacAuto(); }
+
+  window.moveFac = (dir, isAuto = false) => {
+    const facilities = CMS.get('facilities');
+    const total = facilities.length;
+    const visible = window.innerWidth > 768 ? 3 : 1;
+    const maxIndex = Math.max(0, total - visible);
+    
+    facIndex += dir;
+    
+    // Looping logic for auto-scroll OR when at edge
+    if (facIndex < 0) facIndex = maxIndex;
+    if (facIndex > maxIndex) facIndex = 0;
+    
+    const container = document.getElementById('facilitiesGallery');
+    const gap = 24; // 1.5rem
+    const firstCard = container.firstElementChild;
+    const cardWidth = firstCard ? firstCard.offsetWidth : 0;
+    const move = facIndex * (cardWidth + gap);
+    
+    container.style.transform = `translateX(-${move}px)`;
+    updateFacNav();
+    
+    // If user clicked manually, reset the timer
+    if (!isAuto) resetFacAuto();
+  };
+
+  function updateFacNav() {
+    const facilities = CMS.get('facilities');
+    const total = facilities.length;
+    const visible = window.innerWidth > 768 ? 3 : 1;
+    const maxIndex = Math.max(0, total - visible);
+    
+    // In looping mode, we usually don't disable arrows, 
+    // but we can add visual feedback or keep them active.
+    document.getElementById('facPrev')?.classList.toggle('disabled', total <= visible);
+    document.getElementById('facNext')?.classList.toggle('disabled', total <= visible);
+  }
+
+  window.openFacDetail = (id) => {
+    stopFacAuto(); // Pause auto-scroll when modal is open
+    const f = CMS.get('facilities').find(x => x.id === id);
+    if (!f) return;
+    
+    document.getElementById('facDetailImg').style.backgroundImage = `url('${f.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800'}')`;
+    document.getElementById('facDetailTag').textContent = f.tag;
+    document.getElementById('facDetailName').textContent = f.name;
+    document.getElementById('facDetailText').textContent = f.desc;
+    
+    document.getElementById('facDetailModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeFacDetail = () => {
+    document.getElementById('facDetailModal').classList.remove('active');
+    document.body.style.overflow = '';
+    startFacAuto(); // Resume auto-scroll
+  };
+
+  // Close modal on escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeFacDetail();
+  });
+  
+  // Close modal on click outside content
+  document.getElementById('facDetailModal')?.addEventListener('click', e => {
+    if (e.target.id === 'facDetailModal') closeFacDetail();
+  });
+
+  // Touch Support for Gallery
+  let facStartX, facIsDragging = false;
+  const facGallery = document.getElementById('facilitiesGallery');
+  if (facGallery) {
+    facGallery.addEventListener('touchstart', e => { 
+      facStartX = e.touches[0].pageX; 
+      facIsDragging = true; 
+      stopFacAuto(); 
+    });
+    facGallery.addEventListener('touchend', e => {
+      if(!facIsDragging) return;
+      const diff = e.changedTouches[0].pageX - facStartX;
+      if(Math.abs(diff) > 50) moveFac(diff > 0 ? -1 : 1);
+      facIsDragging = false;
+      startFacAuto();
+    });
+  }
+
+  renderFacilities();
+</script>
+</body>
+
+</html>
