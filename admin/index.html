@@ -1450,7 +1450,11 @@ async function handleBulkUpload(input) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageData: compressed, fileName: file.name })
       });
-      if (!response.ok) throw new Error('Upload failed');
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Upload failed:', response.status, errorText);
+        throw new Error(`Upload failed: ${response.status} ${errorText}`);
+      }
       const result = await response.json();
       images.push({ id: Date.now() + Math.random(), name: file.name, url: result.url, size: file.size, type: file.type });
     } catch (error) {
@@ -1515,7 +1519,11 @@ async function previewFile(input, previewId, dataId) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageData: compressed, fileName: file.name })
       });
-      if (!response.ok) throw new Error('Upload failed');
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Upload failed:', response.status, errorText);
+        throw new Error(`Upload failed: ${response.status} ${errorText}`);
+      }
       const result = await response.json();
       document.getElementById(dataId).value = result.url;
     } catch (error) {

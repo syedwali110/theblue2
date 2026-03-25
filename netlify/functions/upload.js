@@ -122,6 +122,6 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error(error);
-    return { statusCode: 500, body: 'Internal server error' };
+    return { statusCode: 500, body: error.message || 'Internal server error' };
   }
 };
